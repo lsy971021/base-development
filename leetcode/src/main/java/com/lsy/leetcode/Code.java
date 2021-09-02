@@ -29,11 +29,80 @@ public class Code {
      * 输入：version1 = "7.5.2.4", version2 = "7.5.3"  输出：-1
      */
 
+    @Test
+    public int t2(String version1, String version2) {
+        int bigger = version1.length() > version2.length() ? version1.length() : version2.length();
+        char v1 = '-', v2 = '-';
+        int v1Index = 0, v2Index = 0, valueV1 = -1, valueV2 = -2;
+        boolean v1Right = true, v2Right = true;
+        boolean begin = false;
+        for (int i = 0; i < bigger; i++) {
+            if (v1Index > i || v2Index > i) {
+                if (v1Index > i && v2Index > i) {
+                    if (valueV1 == valueV2) return 0;
+                }
+                if (v1Index > i) {
+                    while (true) {
+                        if (++v2Index < version2.length()) {
+
+                        }
+                    }
+                }
+                return -1;
+            }
+            if (begin) {
+                //int one = Integer.valueOf(String.valueOf(version1.charAt(indexV1++)));
+                //int another = Integer.valueOf(String.valueOf(version2.charAt(indexV2++)));
+                char one = version1.charAt(indexV1++);
+                char another = version2.charAt(indexV2++);
+                if (one == '.' || another == '.') {
+                    if (one == '.' && another == '.') {
+                        return valueV1 > valueV2 ? 1 : -1;
+                    }
+                    if (one == '.') return -1;
+                    return 1;
+                }
+                continue;
+            }
+            boolean v1Cor = (v1Right && v1 == '0') || v1 == '.';
+            boolean v2Cor = (v2Right && v2 == '0') || v2 == '.';
+            if (v1Cor || v2Cor) {
+                if (v1Cor && v2Cor) {
+                    v1Right = true;
+                    v2Right = true;
+                    v1Index++;
+                    v2Index++;
+                    continue;
+                }
+                if (v1Cor) {
+                    v1Right = true;
+                    v1Index++;
+                    continue;
+                }
+                v2Index++;
+                v2Right = true;
+                continue;
+            }
+            if (v1Right) v1 = version1.charAt(indexV1);
+            if (v2Right) v2 = version2.charAt(indexV2);
+            valueV1 = Integer.valueOf(String.valueOf(v1));
+            valueV2 = Integer.valueOf(String.valueOf(v2));
+            if (valueV1 == valueV2) {
+                v1Index++;
+                v2Index++;
+                v1Right = false;
+                v2Right = false;
+                continue;
+            } else begin = true;         // 11.332.1   11.2333.1
+        }
+        return 0;
+    }
+
 
     @Test
     public void t1() {
         String version1 = "1.01";
-        String version2 = "1.00000003";
+        String version2 = "1.00000001";
         System.out.println(compareVersion(version1, version2));
     }
 
@@ -41,39 +110,53 @@ public class Code {
         return compare(version1, version2);
     }
 
+    boolean v1IsPoint = true;
+    boolean v2IsPoint = true;
+    int indexV1 = 0, indexV2 = 0;
+
     public int compare(String version1, String version2) {
-        int v1 = 0, v2 = 0, indexV1 = 0, indexV2 = 0;
-        boolean v1IsPoint = true;
-        boolean v2IsPoint = true;
-        while (true) {
+        int v1 = 0, v2 = 0;
+
+        while (true) {      // 1.001   1.01
             if (v1 == v2) {
-                if (version1.length() > indexV1) v1 = filterChar(version1, indexV1++, v1IsPoint);
-                if (version2.length() > indexV2) v2 = filterChar(version2, indexV2++, v2IsPoint);
-                if(indexV1>=version1.length() || indexV2>=version2.length()) v1=-1;
-                if(indexV2>=version2.length())  v2=-1;
+                if (v1 == -1) return 0;
+                if (version1.length() > indexV1) v1 = filterChar(version1, true);
+                else v1 = -1;
+                if (version2.length() > indexV2) v2 = filterChar(version2, false);
+                else v2 = -1;
             } else {
                 int a = version1.length() - indexV1;
                 int b = version2.length() - indexV2;
-                for (int i = 0; i < (a<b?a:b); i++) {
-                    if(version1.charAt(indexV1++) == '.' || version2.charAt(indexV2++) == '.'){
-                        if(version1.charAt(indexV1++) == '.' && version2.charAt(indexV2++) == '.')  return a<b?-1:1;
-                        return version1.charAt(indexV1++) == '.'?-1:1;
+                for (int i = 0; i < (a < b ? a : b); i++) {
+                    if (version1.charAt(indexV1++) == '.' || version2.charAt(indexV2++) == '.') {
+                        if (version1.charAt(indexV1++) == '.' && version2.charAt(indexV2++) == '.')
+                            return a < b ? -1 : 1;
+                        return version1.charAt(indexV1++) == '.' ? -1 : 1;
                     }
                 }
-                return a<b?-1:1;
+                return a < b ? -1 : 1;
             }
         }
     }
 
-    public int filterChar(String version, int index, boolean isPoint) {
-        if (version.length() <= index) return version.charAt(index - 1);
-        char c = version.charAt(index);
+    public int filterChar(String version, boolean isV1) {
+        if (version.length() <= (isV1 ? indexV1 : indexV2))
+            return Integer.valueOf(String.valueOf(version.charAt((isV1 ? indexV1 : indexV2) - 1)));
+        char c = version.charAt(isV1 ? indexV1 : indexV2);
+        boolean isPoint = isV1 ? v1IsPoint : v2IsPoint;
         if ((isPoint && c == '0') || c == '.') {
-            isPoint = true;
-            return filterChar(version, ++index, isPoint);
+            if (isV1) {
+                ++indexV1;
+                v1IsPoint = true;
+            } else {
+                ++indexV2;
+                v2IsPoint = true;
+            }
+            return filterChar(version, isV1);
         }
-        isPoint = false;
-        return version.charAt(index);
+        if (isV1) v1IsPoint = false;
+        else v2IsPoint = false;
+        return Integer.valueOf(String.valueOf(version.charAt(isV1 ? indexV1 : indexV2)));
     }
 
 }
