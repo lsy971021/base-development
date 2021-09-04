@@ -1,7 +1,10 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    # useSSL=false
-    url: jdbc:mysql://localhost:3306/devs
-    username: root
-    password: Liusiyuan1
+#    # useSSL=false
+#    url: jdbc:mysql://localhost:3306/devs
+#    username: root
+#    password: Liusiyuan1
+    url: jdbc:mysql://rm-bp1072nxkqxhi2afv.mysql.rds.aliyuncs.com/viptest?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false
+    username: viptscn
+    password: he&2d1%$sezz!

@@ -2,6 +2,7 @@ package com.lsy.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -12,6 +13,8 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.GetSourceRequest;
 import org.elasticsearch.client.core.GetSourceResponse;
+import org.elasticsearch.client.core.TermVectorsRequest;
+import org.elasticsearch.client.core.TermVectorsResponse;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,5 +117,36 @@ public class EsServiceImpl implements EsService{
             e.printStackTrace();
         }
         System.out.println(source);
+    }
+
+    @Override
+    public void termVectorsV1() {
+        TermVectorsRequest termVectorsRequest = new TermVectorsRequest(index,"2");
+        termVectorsRequest.setFields("name");
+        /**
+         * 设置fieldStatistics为false（默认为true）以省略文档计数、文档频率总和、总词频总和。
+         * 设置termStatistics为true（默认为false）以显示总词频和文档频率。
+         * 设置positions为false（默认为true）以省略仓位的输出。
+         * 设置offsets为false（默认为true）以省略偏移量的输出。
+         * 设置payloads为false（默认为true）以省略有效负载的输出。
+         * 设置filterSettings过滤可以根据它们的 tf-idf 分数返回的术语。
+         * 设置perFieldAnalyzer为指定与字段所具有的分析器不同的分析器。
+         * 设置realtime为false（默认为true）以接近实时地检索术语向量。
+         * 设置路由参数
+         */
+        termVectorsRequest.setFieldStatistics(false);
+//        termVectorsRequest.setFilterSettings();
+        TermVectorsResponse termvectors = null;
+        try {
+            termvectors = client.termvectors(termVectorsRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(termvectors);
+    }
+
+    @Override
+    public void bulkV1() {
+        BulkRequest bulkRequest = new BulkRequest();
     }
 }

@@ -37,4 +37,16 @@ public class EsController {
         esService.getSourceV1();
         return "ok";
     }
+
+    @PostMapping("/termVectorsV1")
+    public String termVectorsV1(){
+        esService.termVectorsV1();
+        return "ok";
+    }
+
+    @PostMapping("/bulkV1")
+    public String bulkV1(){
+        esService.bulkV1();
+        return "ok";
+    }
 }
