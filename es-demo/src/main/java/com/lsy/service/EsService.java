@@ -9,7 +9,11 @@ public interface EsService {
 
     void getSourceV1();
 
-    void termVectorsV1();
+    void updateV1();
 
     void bulkV1();
+
+    void deleteByQueryV1();
+
+    void termVectorsV1();
 }

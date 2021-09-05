@@ -3,12 +3,15 @@ package com.lsy.service;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.GetSourceRequest;
@@ -16,6 +19,9 @@ import org.elasticsearch.client.core.GetSourceResponse;
 import org.elasticsearch.client.core.TermVectorsRequest;
 import org.elasticsearch.client.core.TermVectorsResponse;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.DeleteByQueryRequest;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +38,7 @@ public class EsServiceImpl implements EsService{
     private final String index="index1";
 
     @Autowired
-    private RestHighLevelClient client;
+    private RestHighLevelClient client; //default timeout=1m
 
     /**
      * 创建新的索引
@@ -146,7 +152,59 @@ public class EsServiceImpl implements EsService{
     }
 
     @Override
+    public void updateV1() {
+        UpdateRequest updateRequest = new UpdateRequest(index,"2");
+        Map<String,Object> map = new HashMap<>();
+        map.put("name","lyf");
+        updateRequest.doc(map);
+        UpdateResponse update = null;
+        try {
+            update = client.update(updateRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(update);
+    }
+
+    @Override
     public void bulkV1() {
-        BulkRequest bulkRequest = new BulkRequest();
+        BulkRequest bulkRequest = new BulkRequest("index3");
+        for (int i = 0; i < 10; i++) {
+            IndexRequest request = new IndexRequest();
+            Map<String, Object> map = new HashMap<>();
+            map.put("name","lsy-00"+i);
+            map.put("age",i);
+            map.put("gender",1);
+            map.put("high",178);
+            map.put("interest","reading books,trip,study");
+            request.id(i+"");
+            request.source(map);
+            bulkRequest.add(request);
+        }
+        BulkResponse bulk = null;
+        try {
+            bulk = client.bulk(bulkRequest, RequestOptions.DEFAULT);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(bulk.status());
+    }
+
+    @Override
+    public void deleteByQueryV1() {
+        DeleteByQueryRequest deleteByQueryRequest = new DeleteByQueryRequest("index3");
+        deleteByQueryRequest.setQuery(QueryBuilders.matchAllQuery()).setConflicts("proceed"); //防止版本冲突引起操作失败
+        BulkByScrollResponse deleteByQuery = null;
+        try {
+            deleteByQuery = client.deleteByQuery(deleteByQueryRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(deleteByQuery.getBulkFailures());
+        System.out.println(deleteByQuery.getTotal());
+        System.out.println(deleteByQuery.getDeleted());
+        System.out.println(deleteByQuery.getStatus());
+        System.out.println(deleteByQuery.getCreated());
     }
 }

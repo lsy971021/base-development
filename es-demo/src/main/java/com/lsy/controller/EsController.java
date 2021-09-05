@@ -2,6 +2,7 @@ package com.lsy.controller;
 
 import com.lsy.service.EsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +15,20 @@ public class EsController {
     @Autowired
     private EsService esService;
 
+    @GetMapping("/wanglei")
+    public String test(){
+        return "臭傻逼";
+    }
+
     @PostMapping("/createDocV1")
     public String createDocV1(){
         esService.createIndex();
+        return "ok";
+    }
+
+    @PostMapping("/updateDocV1")
+    public String updateDocV1(){
+        esService.updateV1();
         return "ok";
     }
 
@@ -47,6 +59,12 @@ public class EsController {
     @PostMapping("/bulkV1")
     public String bulkV1(){
         esService.bulkV1();
+        return "ok";
+    }
+
+    @PostMapping("/deleteByQueryV1")
+    public String deleteByQueryV1(){
+        esService.deleteByQueryV1();
         return "ok";
     }
 }
