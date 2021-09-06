@@ -16,4 +16,10 @@ public interface EsService {
     void deleteByQueryV1();
 
     void termVectorsV1();
+
+    void multiGetDocV1();
+
+    void updateByQueryV1();
+
+    void searchDocV1();
 }

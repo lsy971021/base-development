@@ -1,24 +1,14 @@
 package com.lsy;
 
-import org.apache.http.HttpHost;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
 
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
-        //SpringApplication.run(Application.class,args);
-        RestHighLevelClient restHighLevelClient = new RestHighLevelClient(RestClient.builder(
+        SpringApplication.run(Application.class,args);
+        /*RestHighLevelClient restHighLevelClient = new RestHighLevelClient(RestClient.builder(
                 new HttpHost("localhost", 9200, "http")));
         SearchRequest searchRequest = new SearchRequest("index03");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -45,6 +35,6 @@ public class Application {
             restHighLevelClient.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
