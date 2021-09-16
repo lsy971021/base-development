@@ -12,6 +12,7 @@
         <module>es-demo</module>
         <module>java8-demo</module>
         <module>leetcode</module>
+        <module>rocketMQ-demo</module>
     </modules>
 
     <properties>
