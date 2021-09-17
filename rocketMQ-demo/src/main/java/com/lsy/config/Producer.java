@@ -19,7 +19,6 @@ public class Producer {
         producer=new DefaultMQProducer(GROUP);
         producer.setNamesrvAddr(ADDR);
         producer.start();
-        System.err.println(ADDR);
         return producer;
     }
 }

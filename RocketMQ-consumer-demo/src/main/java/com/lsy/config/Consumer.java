@@ -26,9 +26,6 @@ public class Consumer {
 
     @PostConstruct
     public void consume() throws Exception {
-        System.out.println(ADDR);
-        System.out.println(consumerListener);
-        System.out.println(GROUP);
         consumer = new DefaultMQPushConsumer(GROUP);
         consumer.setNamesrvAddr(ADDR);
         consumer.subscribe(TOPIC,"*");

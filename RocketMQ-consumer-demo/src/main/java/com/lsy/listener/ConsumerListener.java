@@ -14,6 +14,12 @@ public class ConsumerListener implements MessageListenerConcurrently {
         System.out.println("===Consumer收到消息===");
         System.out.println(list.toString());
         System.out.println(consumeConcurrentlyContext.toString());
+        System.out.println("===============");
+        for (MessageExt messageExt : list) {
+            System.out.println("messageExt:"+messageExt.getQueueId());
+            System.out.println("messageExt:"+new String(messageExt.getBody()));
+            System.out.println("----------------");
+        }
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     }
 }

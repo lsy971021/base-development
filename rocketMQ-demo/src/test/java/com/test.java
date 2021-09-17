@@ -12,7 +12,10 @@ public class test {
         DefaultMQProducer defaultMQProducer = new DefaultMQProducer("g1");
         defaultMQProducer.setNamesrvAddr("localhost:9876");
         defaultMQProducer.start();
-        defaultMQProducer.send(new Message("t1", null, "aa".getBytes()), new SendCallback() {
+
+        Message message = new Message("t1", null, "aa".getBytes());
+
+        defaultMQProducer.send(message, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
                 System.out.println("成功");
@@ -20,8 +23,10 @@ public class test {
 
             @Override
             public void onException(Throwable throwable) {
+                System.out.println(new String(message.getBody()));
                 System.out.println("失败");
             }
         });
+        defaultMQProducer.shutdown();
     }
 }
