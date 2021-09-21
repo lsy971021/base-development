@@ -4,24 +4,44 @@ import com.lsy.content.MQInfo;
 import com.lsy.listener.ProducerCallBack;
 import com.lsy.service.ProducerV0;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProducerImpl implements ProducerV0 {
     @Autowired
     private DefaultMQProducer producer;
-    //回调
+
+    /**
+     * 消息回调
+     */
     @Autowired
     private ProducerCallBack callBack;
 
     @Override
     public void sendMsg(String msg) throws Exception {
-        Message message = new Message(MQInfo.TOPIC, MQInfo.TAG, msg.getBytes());
 
-        producer.send(message,callBack);
-        /*producer.send(ProducerMessages.getMessage(msg.getBytes()), new MessageQueueSelector() {
+        for (int i = 0; i < 10; i++) {
+            Message message = new Message(MQInfo.TOPIC, MQInfo.TAG,"key-lsy"+i, msg.getBytes());
+            producer.send(message,callBack);
+        }
+
+        Message message = new Message(MQInfo.TOPIC, MQInfo.TAG,"key-lsy", msg.getBytes());
+
+        /**
+         * 异步发送 + 回调
+         */
+       // producer.send(message,callBack);
+
+        /**
+         * 选择向某个messageQueue发送 + 回调
+         */
+        /*producer.send(message, new MessageQueueSelector() {
             @Override
             public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
                 // 向固定的topic下的某个messageQueue发送消息

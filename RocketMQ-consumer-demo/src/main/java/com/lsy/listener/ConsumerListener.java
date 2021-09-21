@@ -11,14 +11,9 @@ import java.util.List;
 public class ConsumerListener implements MessageListenerConcurrently {
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-        System.out.println("===Consumer收到消息===");
-        System.out.println(list.toString());
-        System.out.println(consumeConcurrentlyContext.toString());
-        System.out.println("===============");
         for (MessageExt messageExt : list) {
-            System.out.println("messageExt:"+messageExt.getQueueId());
-            System.out.println("messageExt:"+new String(messageExt.getBody()));
-            System.out.println("----------------");
+            System.out.println("QueueId:"+messageExt.getQueueId()+"----QueueOffset:"+messageExt.getQueueOffset()+"----CommitLogOffset:"
+                    +messageExt.getCommitLogOffset()+"----Keys:"+messageExt.getKeys());
         }
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     }
