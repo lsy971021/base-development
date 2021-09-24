@@ -36,7 +36,7 @@ public class StreamTestV1 {
             map.put("hello",i+"!!!");
             list.add(map);
         }
-        List<List<Object>> test = Stream.of(list).map((x) -> (x.stream().map((s) -> (s.get("test"))).collect(Collectors.toList()))).collect(Collectors.toList());
+        List<List<Object>> test = Stream.of(list).map(x -> (x.stream().map(s -> (s.get("test"))).collect(Collectors.toList()))).collect(Collectors.toList());
         List<Object> test1 = Stream.of(list).map((x) -> (x.stream().map((s) ->
                 (s.get("test"))).collect(Collectors.toList()))).flatMap(StreamTestV1::flatMapTest).collect(Collectors.toList());
         System.out.println(test);
