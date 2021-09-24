@@ -29,6 +29,9 @@ public class Consumer {
         consumer = new DefaultMQPushConsumer(GROUP);
         consumer.setNamesrvAddr(ADDR);
         consumer.subscribe(TOPIC,"*");
+        /**
+         * 注册监听器
+         */
         consumer.registerMessageListener(consumerListener);
         consumer.start();
     }
