@@ -14,6 +14,8 @@
         <module>leetcode</module>
         <module>rocketMQ-demo</module>
         <module>RocketMQ-consumer-demo</module>
+        <module>mybatis</module>
+        <module>mybatis-plus</module>
     </modules>
 
     <properties>
@@ -23,12 +25,18 @@
         <spring.boot.version>2.2.3.RELEASE</spring.boot.version>
         <mysql.version>8.0.11</mysql.version>
     </properties>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.4.RELEASE</version>
+        <relativePath/>
+    </parent>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>{$spring.cloud.alibaba.version}</version>
+                <version>${spring.cloud.alibaba.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
