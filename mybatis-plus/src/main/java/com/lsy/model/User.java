@@ -1,5 +1,8 @@
 package com.lsy.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**

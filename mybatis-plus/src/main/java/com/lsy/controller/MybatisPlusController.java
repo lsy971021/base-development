@@ -31,7 +31,7 @@ public class MybatisPlusController {
     }
 
     @PostMapping("/delete")
-    public void deleteBySomething(@RequestBody String something){
+    public void deleteBySomething(@RequestParam String something){
         mybatisService.deleteBySomething(something);
     }
 
