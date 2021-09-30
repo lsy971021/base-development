@@ -4,6 +4,8 @@ spring:
     url: jdbc:mysql://localhost:3306/devs
     username: root
 mybatis-plus:
+  #mapper映射
+  mapper-locations: classpath*:mapper/**/*.xml
   global-config:
     db-config:
       id-type: auto

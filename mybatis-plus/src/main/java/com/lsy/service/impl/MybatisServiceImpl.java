@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lsy.model.User;
 import com.lsy.mapper.UserMapper;
 import com.lsy.service.MybatisService;
@@ -57,4 +58,16 @@ public class MybatisServiceImpl implements MybatisService {
         int delete = userMapper.deleteById(something);
         System.out.println(delete);
     }
+
+    @Override
+    public Page<User> page() {
+        Page<User> page = new Page<>(2,3);
+        return userMapper.selectPage(page,null);
+    }
+
+    @Override
+    public void findBySql() {
+        System.out.println(userMapper.find());
+    }
+
 }

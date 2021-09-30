@@ -23,26 +23,27 @@ public class ConstructorsTestV1 {
         instance.test();
         //获取实例的成员变量
         Field[] declaredFields = aClass.getDeclaredFields();
+        //获取age成员变量
+        Field age = aClass.getField("age");
+        age.set(new AnnotationTestV1(),11);
+        System.out.println(age.getInt("age"));
         for (int i = 0; i < declaredFields.length; i++) {
-            System.out.println("declaredField=="+declaredFields[i]);
-            declaredFields[i].setAccessible(true);
-            declaredFields[i].set(1,22);
-            System.out.println(declaredFields[i].get(1));
+            System.out.println("获取实例的成员变量declaredField=="+declaredFields[i].getName());
         }
 
 
         for (int i = 0; i < declaredConstructors.length; i++) {
             //构造器修饰符
-            System.out.println("Modifiers=="+ Modifier.toString(declaredConstructors[i].getModifiers()));
+            System.out.println("构造器修饰符Modifiers=="+ Modifier.toString(declaredConstructors[i].getModifiers()));
             //构造器参数
             Parameter[] parameters = declaredConstructors[i].getParameters();
             //构造器参数类型
             Class[] parameterTypes = declaredConstructors[i].getParameterTypes();
             for (int p = 0; p < parameters.length; p++) {
-                System.out.println("parameter=="+parameters[p]);
+                System.out.println("构造器参数parameter=="+parameters[p]);
             }
             for (int p = 0; p < parameterTypes.length; p++) {
-                System.out.println("parameterTypes=="+parameterTypes[p].getName());
+                System.out.println("构造器参数类型parameterTypes=="+parameterTypes[p].getName());
             }
         }
     }

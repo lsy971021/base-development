@@ -1,5 +1,6 @@
 package com.lsy.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lsy.model.User;
 import com.lsy.service.MybatisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,16 @@ public class MybatisPlusController {
     public void deleteBySomething(@RequestParam String something){
         mybatisService.deleteBySomething(something);
     }
+
+    @PostMapping("/page")
+    public Page<User> deleteBySomething(){
+        return mybatisService.page();
+    }
+
+    @GetMapping("/findBySql")
+    public void findBySql(){
+        mybatisService.findBySql();
+    }
+
 
 }
