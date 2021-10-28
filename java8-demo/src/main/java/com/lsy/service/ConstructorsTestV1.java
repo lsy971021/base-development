@@ -32,6 +32,7 @@ public class ConstructorsTestV1 {
         }
 
 
+
         for (int i = 0; i < declaredConstructors.length; i++) {
             //构造器修饰符
             System.out.println("构造器修饰符Modifiers=="+ Modifier.toString(declaredConstructors[i].getModifiers()));
