@@ -1,6 +1,6 @@
 package com.lsy.controller;
 
-import com.lsy.service.ProducerV0;
+import com.lsy.annotation.ProducerV0;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
