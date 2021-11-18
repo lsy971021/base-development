@@ -10,6 +10,9 @@ public class Person {
     private String sex; //性别
     private String area;  // 地区
 
+    public Person() {
+    }
+
     // 构造方法
     public Person(String name, int salary, int age, String sex, String area) {
         this.name = name;

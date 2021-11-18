@@ -1,6 +1,6 @@
 package com.lsy.annotation;
 
-public class Father implements Person{
+public class Father {
     private String name;
     private int age;
 
@@ -14,8 +14,4 @@ public class Father implements Person{
         System.out.println("father全参构造");
     }
 
-    @Override
-    public void happy() {
-        System.out.println("father is happy");
-    }
 }

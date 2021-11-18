@@ -13,8 +13,6 @@ public class Demo01 implements Cloneable {
         String a = coursewareCode.substring(coursewareCode.indexOf("C"), coursewareCode.indexOf("L"));
         System.out.println(a);
 
-        Person p = new Son();
-        p.happy();
 //        List<Map<String,Object>> list = new ArrayList<>();
        /* Map<String,List<String>> map = new HashMap<>();
         int e = 1;

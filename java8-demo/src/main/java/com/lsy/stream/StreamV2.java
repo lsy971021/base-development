@@ -11,7 +11,7 @@ public class StreamV2 {
     List<Person> personList = new ArrayList<>();
     List<Map<String, String>> lists = new ArrayList<>();
 
-    {
+  /*  {
         personList.add(new Person("Tom", 8900, 12, "male", "New York"));
         personList.add(new Person("Jack", 7000, 13, "male", "Washington"));
         personList.add(new Person("Lily", 7800, 14, "female", "Washington"));
@@ -25,7 +25,7 @@ public class StreamV2 {
             map.put("id", i + "");
             lists.add(map);
         }
-    }
+    }*/
 
     /**
      * 筛选/遍历/匹配（filter/foreach/find/match）
@@ -103,6 +103,67 @@ public class StreamV2 {
         System.out.println("sum:" + sum);
         System.out.println("all:" + all);
     }
+
+   /* @Test
+    public void t(){
+        List<TT> tt = new ArrayList<>();
+            tt.add(new TT(){{
+                setId(1);
+                setCount(2);
+                setUid(1);
+            }});tt.add(new TT(){{
+                setId(1);
+                setCount(3);
+                setUid(2);
+            }});tt.add(new TT(){{
+                setId(2);
+                setCount(1);
+                setUid(1);
+            }});tt.add(new TT(){{
+                setId(3);
+                setCount(2);
+                setUid(1);
+            }});tt.add(new TT(){{
+                setId(3);
+                setCount(10);
+                setUid(2);
+            }});
+            tt.stream().collect(Collectors.groupingBy(id -> id.getId())).entrySet().forEach(x ->{
+                System.out.print(x.getKey()+"==");
+                System.out.print(x.getValue().stream().collect(Collectors.summingInt(TT::getCount))+"==");
+                System.out.print(x.getValue().size());
+                System.out.println();
+            });
+    }
+    private class TT{
+        private int id;
+        private  int count;
+        private int uid;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public int getUid() {
+            return uid;
+        }
+
+        public void setUid(int uid) {
+            this.uid = uid;
+        }
+    }*/
 
     /**
      * 分组(partitioningBy/groupingBy)

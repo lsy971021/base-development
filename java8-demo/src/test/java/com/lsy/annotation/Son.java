@@ -7,8 +7,4 @@ public class Son extends Father{
         System.out.println("son空参构造");
     }
 
-    @Override
-    public void happy() {
-        System.out.println("son is happy");
-    }
 }
