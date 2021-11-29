@@ -4,7 +4,9 @@ import sun.jvm.hotspot.utilities.BitMap;
 
 
 public class Sort {
-    int[] bit = new int[Integer.MAX_VALUE];
+    static {
+        System.out.println("sort init!!");
+    }
 
     public void test(int[] all){
         BitMap bitMap = new BitMap(Integer.MAX_VALUE);

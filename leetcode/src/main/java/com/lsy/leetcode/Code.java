@@ -29,7 +29,7 @@ public class Code {
      * 输入：version1 = "7.5.2.4", version2 = "7.5.3"  输出：-1
      */
 
-    @Test
+//    @Test
     public int t2(String version1, String version2) {
         int bigger = version1.length() > version2.length() ? version1.length() : version2.length();
         char v1 = '-', v2 = '-';
