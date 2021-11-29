@@ -36,64 +36,122 @@ public class kthSmallestPrimeFraction {
                 }
             }
         }
-        int count = 2;
+        int count = 4;
         int big = arr.length - 1;
         int small = 0;
         int oneY = small + 1;
         int oneX = big;
         int anotherX = big - 2;
         int anotherY = small;
+        int x = big;
         while (true) {
-            if (anotherX + 1 == oneX && anotherY + 1 == oneY) {
-                if (++count == k)
-                    return new int[]{arr[oneX], arr[oneY]};
-                else {
-                    oneX++;
-                    oneY++;
-                    anotherX++;
-                    anotherY++;
-                }
-            }
-            if (arr[oneY] * arr[anotherX] <= arr[anotherY] * arr[oneX]) {
-                if (++count == k)
-                    return new int[]{arr[oneY], arr[oneX]};
+            if (anotherX + 1 == oneX) {
                 if (++count == k)
                     return new int[]{arr[anotherY], arr[anotherX]};
+                oneX++;
+                oneY++;
+                anotherX++;
+                anotherY++;
+
+            }
+            if (arr[oneY] * arr[anotherX] <= arr[anotherY] * arr[oneX]) {
+                if (count == k)
+                    return new int[]{arr[oneY], arr[oneX]};
                 if (oneX != big) {
                     oneX++;
                     oneY++;
+                    count++;
                 } else {
-                    oneX = anotherX + 1;
-                    oneY = anotherY + 1;
-                    if (anotherX - 1 > small)
-                        anotherX--;
+                    oneX = --x;
+                    count++;
+                    if (anotherX + 1 == oneX) {
+                        if (anotherX - 1 > small) {
+                            if (count++ == k) {
+                                return new int[]{arr[anotherY], arr[anotherX]};
+                            }
+                            anotherX--;
+                            count++;
+                        }
+                    }
                 }
             } else {
-                if (++count == k)
-                    return new int[]{arr[anotherX], arr[anotherY]};
-                if(oneX == big){
-                    oneX = anotherX + 1;
-                    oneY = anotherY + 1;
-                }
+                if (count++ == k)
+                    return new int[]{arr[anotherY], arr[anotherX]};
                 if (anotherX - 1 > small) {
                     anotherX--;
+                } else {
+                    if (oneX != big) {
+                        if(count == k) {
+                            return new int[]{arr[oneY], arr[oneX]};
+                        }
+                        oneX++;
+                        oneY++;
+                    } else {
+                        oneX = --x;
+                        oneY = small + 1;
+                    }
                 }
-                /*else {
-                    anotherX++;
-                    if (anotherY + 1 < anotherX)
-                        anotherY++;
-                }*/
             }
         }
     }
 
     @Test
     public void test() {
-        //[1,7,23,29,47]
-        //8
-        int[] ints = kthSmallestPrimeFraction(new int[]{1, 7, 23, 29, 47}, 8);
+        int[] ints = kthSmallestPrimeFraction1(new int[]{1, 7, 23, 29, 47}, 8);
         for (int anInt : ints) {
             System.out.println(anInt);
         }
+    }
+
+
+    public int[] kthSmallestPrimeFraction1(int[] arr, int k) {
+        int count = 1;
+        int big = arr.length - 1;
+        int oneY = 0;
+        int oneX = big;
+        int anotherX = big - 1;
+        int anotherY = 0;
+        int x = big;
+        int y = 0;
+        if(count==k)    return create(arr[oneY], arr[oneX]);
+        while (true) {
+            if(anotherX+1==oneX && anotherY==oneY){
+                if(oneY<big && y<big){
+                    oneY++;
+                    y++;
+                }
+            }
+            if(anotherY * oneX > oneY * anotherX) {
+                if(++count==k)
+                    return create(arr[oneY], arr[oneX]);
+                if(oneX==big){
+                    if(x>1)
+                        oneX = --x;
+                    oneY = y;
+                } else{
+                    oneX++;
+                    if(oneY<big)    oneY++;
+                }
+            }else {
+                if (++count == k) return create(arr[anotherY], arr[anotherX]);
+                if(anotherX>1 && anotherY+1!=anotherX)
+                    anotherX--;
+                else{
+                    if(oneX-1 != anotherX+1 && oneY+1!=oneX) {
+                        anotherX = oneX - 1;
+                        anotherY = oneY;
+                    }else {
+                        if(++anotherX==oneX && ++anotherY==oneY){
+                            anotherX++;
+                            anotherY++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public int[] create(int x,int y){
+        return new int[]{x, y};
     }
 }

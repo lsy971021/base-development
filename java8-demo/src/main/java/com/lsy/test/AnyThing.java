@@ -11,6 +11,8 @@ public class AnyThing {
     @Test
     public void t(){
         test(90,10);
+        int a = 1;
+        System.out.println(a++);
     }
 
 
