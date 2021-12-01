@@ -11,7 +11,7 @@ public class StreamV2 {
     List<Person> personList = new ArrayList<>();
     List<Map<String, String>> lists = new ArrayList<>();
 
-  /*  {
+    {
         personList.add(new Person("Tom", 8900, 12, "male", "New York"));
         personList.add(new Person("Jack", 7000, 13, "male", "Washington"));
         personList.add(new Person("Lily", 7800, 14, "female", "Washington"));
@@ -25,7 +25,7 @@ public class StreamV2 {
             map.put("id", i + "");
             lists.add(map);
         }
-    }*/
+    }
 
     /**
      * 筛选/遍历/匹配（filter/foreach/find/match）
