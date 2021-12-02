@@ -3,7 +3,6 @@ package com.lsy.test;
 
 import com.lsy.juc.CAS;
 import org.junit.Test;
-import sun.security.util.BitArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 
 public class AnyThing {
-    final CAS cas = new CAS();
+    CAS cas = new CAS();
 
     public static void main(String[] args) throws InterruptedException {
         Sort ss = new Sort();
@@ -34,41 +33,46 @@ public class AnyThing {
         foodName.add("Fried Chicken");
         foodName.add("Water");
         all.add(foodName);
-        Map<Integer,List<String>> map = new HashMap<>();
+        Map<Integer, List<String>> map = new HashMap<>();
         for (int i = 0; i < orders.size(); i++) {
             List<String> list = orders.get(i);
-            List<String> one = null;
             Integer table = Integer.valueOf(list.get(1));
+            String food = list.get(2);
             if (map.get(table) != null) {
-                one = map.get(table);
+                List<String> l = map.get(table);
+                order(l, food);
             } else {
-                one = new ArrayList<>();
+                List<String> one = new ArrayList<>();
                 one.add(table + "");
                 one.add("0");
                 one.add("0");
                 one.add("0");
+                one.add("0");
+                order(one, food);
                 map.put(table, one);
                 all.add(one);
             }
-            String food = list.get(2);
-            switch (food) {
-                case "Beef Burrito":
-                    one.add(1, (Integer.valueOf(one.get(1) + 1).toString()));
-                    break;
-                case "Ceviche":
-                    one.add(2, (Integer.valueOf(one.get(1) + 1).toString()));
-                    break;
-                case "Fried Chicken":
-                    one.add(3, (Integer.valueOf(one.get(1) + 1).toString()));
-                    break;
-                case "Water":
-                    one.add(4, (Integer.valueOf(one.get(1) + 1).toString()));
-                    break;
-                default:
-                    break;
-            }
         }
         return all;
+    }
+
+    public void order(List<String> list, String food) {
+        switch (food) {
+            case "Beef Burrito":
+                list.set(1, String.valueOf(Integer.valueOf(list.get(1)) + 1));
+                break;
+            case "Ceviche":
+                list.set(2, String.valueOf(Integer.valueOf(list.get(2)) + 1));
+                break;
+            case "Fried Chicken":
+                list.set(3, String.valueOf(Integer.valueOf(list.get(3)) + 1));
+                break;
+            case "Water":
+                list.set(4, String.valueOf(Integer.valueOf(list.get(4)) + 1));
+                break;
+            default:
+                break;
+        }
     }
 
 

@@ -20,7 +20,7 @@ public class JoinOfThread {
         });
         t1.start();
         t2.start();
-        //主线程调用join()时会被阻塞
+        //主线程调用join()时会被阻塞 (直到t1线程执行完后才返回)
         t1.join();
         System.out.println("main");
         t2.join();
