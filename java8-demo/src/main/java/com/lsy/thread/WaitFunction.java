@@ -4,12 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * wait()   和   sleep 区别
+ * 同：
+ * 都是线程同步时会用到的方法，使当前线程暂停运行，把运行机会交给其它线程。
+ * 如果任何线程在等待期间被中断都会抛出InterruptedException
+ * 都是native方法
+ *
+ * 异：
+ * 所在类不同，wait()是Object超类中的方法；而sleep()是线程Thread类中的方法
+ * 关键点是对锁的保持不同，wait会释放锁；而sleep()并不释放锁
+ * 唤醒方法不完全相同，wait依靠notify或者notifyAll、中断发生、或者到达指定时间来唤醒；而sleep()则是到达指定的时间后被唤醒。
+ * 使用的位置不同，wait只能用在同步代码块中，而sleep用在任何位置。
+ */
 public class WaitFunction {
 
     final static List list = new ArrayList();
 
     public static void main(String[] args) throws InterruptedException {
         new Thread(()->thread1()).start();
+        new Thread(()->thread1()).start();
+        TimeUnit.SECONDS.sleep(1);
         thread2();
     }
 
@@ -19,6 +35,7 @@ public class WaitFunction {
                 // 预防虚假唤醒（即使没被其他线程调用notify()或notifyAll()或
                 // 其他线程调用该 **线程的interrupt()** 也可能从挂起状态变为可运行状态）
                 while (list.size() == 0) {
+                    System.out.println("start wait ...");
                     // 调用wait()时该线程会被阻塞挂起，直到其他线程调用notify()或notifyAll()时会唤醒
                     // 其他线程调用该 **线程的interrupt()** 会中断，并抛出InterruptedException
                     // wait()线程应先获取 **该对象(调用wait方法的对象)** 的监视器锁，否则会抛异常
@@ -31,7 +48,7 @@ public class WaitFunction {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("thread1 success!");
+            System.out.println("thread success!");
         }
     }
 
