@@ -4,6 +4,7 @@ package com.lsy.test;
 import com.lsy.juc.CAS;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,11 @@ public class AnyThing {
     @Test
     public void t() throws ClassNotFoundException {
 //        CAS a = this.cas;
+        float a = 1.0f - 0.9f;
+        float b = 0.9f - 0.8f;
+        Float x = Float.valueOf(a);
+        Float y = Float.valueOf(b);
+        System.out.println(x.equals(y));
     }
 
     public List<List<String>> displayTable(List<List<String>> orders) {
