@@ -5,29 +5,105 @@ import com.lsy.juc.CAS;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class AnyThing {
     CAS cas = new CAS();
 
     public static void main(String[] args) throws InterruptedException {
-        Sort ss = new Sort();
-        Sort sss = new Sort();
+        List<ClassLoadingTest> a = new ArrayList<>();
+        ClassLoadingTest aa = new ClassLoadingTest();
+        aa.setA(1);
+        ClassLoadingTest ss = new ClassLoadingTest();
+        ss.setA(1);
+        ClassLoadingTest dd = new ClassLoadingTest();
+        dd.setA(1);
+        ClassLoadingTest ee = new ClassLoadingTest();
+        ee.setA(1);
+        ClassLoadingTest ff = new ClassLoadingTest();
+        ff.setA(1);
+        a.add(ff);
+        System.out.println(a);
+        System.out.println(a.size());
+        /*for (ClassLoadingTest classLoadingTest : a) {
+
+        }*/
+        for (int i = 0; i < a.size(); i++) {
+            if (i == 0)
+                a.remove(a.get(i));
+        }
+        System.out.println(a);
+        System.out.println(a.size());
     }
 
+    private volatile ReentrantLock lock = new ReentrantLock();
+
     @Test
-    public void t() throws ClassNotFoundException {
-//        CAS a = this.cas;
+    public void t() throws IOException {
+        /*Integer a = 999;
+        Integer b = 999;
+        System.out.println(a==b);
+        System.out.println(a.equals(b));
+        Integer c = 99;
+        Integer d = 99;
+        System.out.println(c==d);*/
+        ClassLoadingTest c1 = new ClassLoadingTest();
+        ClassLoadingTest c2 = c1;
+        System.out.println(c1 == c2);
+        final ClassLoadingTest c3 = c1;
+        System.out.println(c1 == c3);
+    }
+
+    public void t4() throws InterruptedException {
+        //Thread.sleep(2000);
+        System.out.println(9999);
+    }
+
+    public void t2() {
+        lock.lock();
+        try {
+            System.out.println("1111");
+            //TimeUnit.SECONDS.sleep(2);
+            //Thread.sleep(1000);
+            Thread t4 = new Thread(() -> {
+                try {
+                    t4();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            t4.start();
+            System.out.println("end");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
         float a = 1.0f - 0.9f;
         float b = 0.9f - 0.8f;
         Float x = Float.valueOf(a);
         Float y = Float.valueOf(b);
         System.out.println(x.equals(y));
     }
+
+    public void t3() {
+        lock.lock();
+        try {
+            System.out.println("2222");
+            //TimeUnit.SECONDS.sleep(2);
+            //Thread.sleep(1000);
+            System.out.println("end   ... ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
 
     public List<List<String>> displayTable(List<List<String>> orders) {
 //        BitArray bitArray = new BitArray(Integer.MAX_VALUE);
@@ -81,5 +157,15 @@ public class AnyThing {
         }
     }
 
-
+    @Test
+    public void test4(){
+        Set set = new HashSet();
+        String a = "重地";
+        String b = "通话";
+        System.out.println(a.hashCode()==b.hashCode());
+        System.out.println(a.equals(b));
+        set.add(a);
+        set.add(b);
+        set.forEach(x-> System.out.println(x));
+    }
 }

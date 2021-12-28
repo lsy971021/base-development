@@ -2,7 +2,7 @@ package com.lsy.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lsy.model.User;
-import com.lsy.annotation.MybatisService;
+import com.lsy.service.MybatisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

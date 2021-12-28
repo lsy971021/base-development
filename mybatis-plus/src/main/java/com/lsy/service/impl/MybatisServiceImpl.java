@@ -1,4 +1,4 @@
-package com.lsy.annotation.impl;
+package com.lsy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lsy.model.User;
 import com.lsy.mapper.UserMapper;
-import com.lsy.annotation.MybatisService;
+import com.lsy.service.MybatisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

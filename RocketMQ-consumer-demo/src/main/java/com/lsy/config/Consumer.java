@@ -26,7 +26,7 @@ public class Consumer {
 //    @Value("${rocketmq.topic}")
     private String TOPIC;
 //    @Value("${rocketmq.tag}")
-    @NotEmpty
+    @NotEmpty(message = "TAG不能为空")
     private String TAG;
     DefaultMQPushConsumer consumer;
 
