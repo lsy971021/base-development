@@ -11,9 +11,33 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-public class AnyThing {
+public class AnyThing implements Cloneable{
+    ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+    int i = 10;
     CAS cas = new CAS();
+    @Test
+    public void tt() throws InterruptedException {
+        new Thread(()->{
+            if(threadLocal.get()==null){
+                i++;
+                threadLocal.set(i);
+                System.out.println("1111:::"+threadLocal.get());
+            }else {
+                System.out.println("===="+threadLocal.get());
+            }
+        }).start();
+        Thread.sleep(1000);
+        new Thread(()->{
+            if(threadLocal.get()==null){
+                i++;
+                threadLocal.set(i);
+                System.out.println("2222:::"+threadLocal.get());
+            }else {
+                System.out.println(threadLocal.get());
+            }
+        }).start();
 
+    }
     public static void main(String[] args) throws InterruptedException {
         List<ClassLoadingTest> a = new ArrayList<>();
         ClassLoadingTest aa = new ClassLoadingTest();
@@ -167,5 +191,16 @@ public class AnyThing {
         set.add(a);
         set.add(b);
         set.forEach(x-> System.out.println(x));
+    }
+    @Test
+    public void test5() throws CloneNotSupportedException {
+        AnyThing anyThing = new AnyThing();
+        AnyThing a =(AnyThing) anyThing.clone();
+        System.out.println(anyThing==a);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
