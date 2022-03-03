@@ -203,4 +203,10 @@ public class AnyThing implements Cloneable{
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    @Test
+    public void test11(){
+        String s = "[sssss]";
+        System.out.println(s.substring(1, s.length() - 1));
+    }
 }
