@@ -1,6 +1,7 @@
 package com.lsy.poi;
 
 import org.apache.poi.xssf.usermodel.*;
+import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,7 +9,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class CheckTest {
-    private String path = "/Users/icourt/Downloads/杨鑫辉Alpha案例库检索记录表20220302.xlsx";
+    private String path = "/Users/icourt/Downloads/待二次处理数据.xlsx";
     //需要解析的列
     private static int sourceLine = 10;
     //开始解析的行
@@ -25,6 +26,55 @@ public class CheckTest {
     private static int line4 = 14;
     //redis hash key
     private final String key="xlsxTest";
+
+    @Test
+    public void test1() throws Exception {
+        Map<String,String> map = new HashMap<>();
+        XSSFWorkbook workbook = new XSSFWorkbook(
+                new FileInputStream(path));
+        XSSFSheet sheet = workbook.getSheetAt(1);
+        XSSFSheet result = workbook.createSheet("result");
+        for (int i = 1; i < 961; i++) {
+            XSSFRow row = sheet.getRow(i);
+            XSSFCell cell = row.getCell(0);
+            XSSFCell cell2 = row.getCell(1);
+            String value = cell.getStringCellValue();
+            String value2 = cell2.getStringCellValue();
+            /*int flagStart=0;
+            int flagEnd=0;
+            for (int u = 0; u < value.length(); u++) {
+                if(value.charAt(u)=='司'){
+                    if(value.charAt(u-1)=='公'){
+                        String key = value.substring(flagStart, u);
+
+                        flagStart=u+1;
+                        map.put(key,)
+                    }
+                }
+            }*/
+            String[] keys = value.split("公司");
+            for (String s : keys) {
+                s=s+"公司";
+                System.out.println(s);
+            }
+            /*String[] values = value2.split("\r\n");
+            System.out.println(keys.length+"===="+values.length);
+            //System.out.println("values==="+values.toString());
+            Arrays.stream(values).forEach(c-> System.out.println("values==="+c));
+            for (int u = 0; u < keys.length; u++) {
+                map.put(keys[u],values[u]);
+            }*/
+        }
+
+        /*int row = 1;
+        for (Map.Entry<String, String> stringStringEntry : map.entrySet()) {
+            XSSFRow resultRow = result.createRow(row++);
+            resultRow.createCell(1).setCellValue(stringStringEntry.getKey());
+            resultRow.createCell(2).setCellValue(stringStringEntry.getValue());
+        }
+        workbook.write(new FileOutputStream(path));
+        workbook.close();*/
+    }
 
 
     public void test() throws Exception {
