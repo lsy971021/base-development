@@ -1,5 +1,7 @@
 package com.lsy.test;
 
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Site;
@@ -27,9 +29,13 @@ public class WebMagicTest implements PageProcessor {
 //        page.addTargetRequests(allLinks);
 
         //get()取一个元素，all取所有的，xpath解析
-        List<String> all = page.getHtml().xpath("//div[@class='j_nolist']/text()").all();
+        //List<String> all = page.getHtml().xpath("//div[@class='j_nolist']/text()").all();
+        //dom解析
+        Document document = page.getHtml().getDocument();
 //        List<String> all = page.getHtml().xpath("//div[@class='e']/a[1]/@href]").all();
-        page.putField("jobLists",all);
+        Elements jobList = document.getElementsByClass("tags");
+
+        page.putField("jobLists",jobList.text());
 
 
         //把解析的结果发送给pipeline  map结构,默认发送到控制台
