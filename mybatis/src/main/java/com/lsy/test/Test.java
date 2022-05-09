@@ -20,6 +20,7 @@ public class Test {
         SqlSessionFactory factory = sqlSessionFactoryBuilder.build(stream);
         SqlSession session = factory.openSession();
         List<Object> find = session.selectList("find");
+        //添加log4j可查看控制台输出的sql语句动态拼接
         find.forEach(v -> System.out.println(v));
         session.close();
     }
