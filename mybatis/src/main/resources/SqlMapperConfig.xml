@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--首先加载核心配置文件-->
+<configuration>
+
+    <!--配置数据库连接环境-->
+    <environments default="development">
+        <!--development环境-->
+        <environment id="development">
+            <!--使用JDBC的事务管理器-->
+            <transactionManager type="JDBC"/>
+            <!--使用数据库连接池-->
+            <dataSource type="POOLED">
+                <!--连接属性-->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/devs"/>
+                <property name="username" value="root"/>
+                <property name="password" value="Liusiyuan1"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--然后加载mapper映射文件-->
+    <mappers>
+        <mapper resource="com/lsy/pojo/DepartmentMapper.xml"/>
+    </mappers>
+</configuration>
