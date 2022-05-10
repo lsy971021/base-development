@@ -28,31 +28,21 @@
         <typeAlias alias="dept" type="com.lsy.pojo.Department"></typeAlias>
     </typeAliases>
 
-    <!--配置数据库连接环境-->
+    <!--配置数据库连接环境，整合spring后environments配置将废除-->
     <environments default="development">
 
         <!--默认走第一个环境配置-->
         <!--development环境-->
         <environment id="development">
-            <!--使用JDBC的事务管理器-->
+            <!--type有两个选项： JDBC、Manager-->
+            <!--JDBC：直接使用jdbc的提交和回滚设施，他依赖从数据源获得的链接来管理实务作用域-->
+            <!--Manager：这个配置几乎没做什么，他从不提交或回滚一个连接，而是让容器来管理实务的整个生命周期（如spring、jEE应用服务器的上下文）-->
             <transactionManager type="JDBC"/>
-            <!--使用数据库连接池-->
-            <dataSource type="POOLED">
-                <!--连接属性-->
-                <property name="driver" value="${driver}"/>
-                <property name="url" value="${url}"/>
-                <!-- [:] 后为默认值，若要是用默认值需开启启用默认值，在properties中定义-->
-                <property name="username" value="${username:root}"/>
-                <property name="password" value="${password}"/>
-            </dataSource>
-        </environment>
 
-
-        <!--可定义多个数据源-->
-        <environment id="development-rep">
-            <!--使用JDBC的事务管理器-->
-            <transactionManager type="JDBC"/>
-            <!--使用数据库连接池-->
+            <!--数据源配置，有三种数据源类型：UNPOOLED、POOLED、JNDI-->
+            <!--UNPOOLED：mybatis会为每一个数据库操作创建一个新的链接，并关闭它。适用于只有小规模数量并发用户的简单应用程序上-->
+            <!--POOLED：mybatis会创建一个数据库连接池，连接池的每一个连接将会被用作数据库操作，一旦操作完成会将此连接返回给连接池-->
+            <!--JNDI：mybatis会从在应用服务器向配置好的JNDI数据源DataSource获取数据库连接-->
             <dataSource type="POOLED">
                 <!--连接属性-->
                 <property name="driver" value="${driver}"/>
@@ -64,9 +54,25 @@
         </environment>
 
 
+        <!--可定义多个数据源-->
+        <environment id="development-rep">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--连接属性-->
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <!-- [:] 后为默认值，若要是用默认值需开启启用默认值，需在properties中定义-->
+                <property name="username" value="${username:root}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+
     </environments>
     <!--然后加载mapper映射文件-->
     <mappers>
+        <!--一个一个的xml去找-->
         <mapper resource="com/lsy/pojo/DepartmentMapper.xml"/>
+        <!--找某个包下的所有-->
+<!--        <package name="com.lsy.pojo"/>-->
     </mappers>
 </configuration>
