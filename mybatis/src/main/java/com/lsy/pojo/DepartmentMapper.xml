@@ -3,7 +3,8 @@
 
 <mapper namespace="com.lsy.mapper.DepartmentMapper">
 
-    <select id="find" resultType="com.lsy.pojo.Department">
+    <!--resultType可写别名，在config中有配置-->
+    <select id="find" resultType="dept">
         select * from `department`
     </select>
 </mapper>

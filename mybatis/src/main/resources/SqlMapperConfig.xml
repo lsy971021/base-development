@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--可下载查看mybatis的dtd规范，规定了标签的顺序和可用标签-->
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
 <!--首先加载核心配置文件-->
 <configuration>
 
+    <!--定义全局属性，更加解耦，下面可引用-->
+    <!--方法传递优先级<resource属性读取类路径下属性文件<properties元素中指定的属性-->
+    <properties resource="jdbc.properties">
+        <!--开启默认值配置-->
+        <property name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true"/>
+    </properties>
+
+    <!--第二种定义全局变量方式-->
+    <!--<properties>
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/devs"/>
+        <property name="username" value="root"/>
+        <property name="password" value="Liusiyuan1"/>
+    </properties>-->
+
+    <!--义别名-->
+    <typeAliases>
+        <typeAlias alias="dept" type="com.lsy.pojo.Department"></typeAlias>
+    </typeAliases>
+
     <!--配置数据库连接环境-->
     <environments default="development">
+
+        <!--默认走第一个环境配置-->
         <!--development环境-->
         <environment id="development">
             <!--使用JDBC的事务管理器-->
@@ -15,12 +39,31 @@
             <!--使用数据库连接池-->
             <dataSource type="POOLED">
                 <!--连接属性-->
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/devs"/>
-                <property name="username" value="root"/>
-                <property name="password" value="Liusiyuan1"/>
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <!-- [:] 后为默认值，若要是用默认值需开启启用默认值，在properties中定义-->
+                <property name="username" value="${username:root}"/>
+                <property name="password" value="${password}"/>
             </dataSource>
         </environment>
+
+
+        <!--可定义多个数据源-->
+        <environment id="development-rep">
+            <!--使用JDBC的事务管理器-->
+            <transactionManager type="JDBC"/>
+            <!--使用数据库连接池-->
+            <dataSource type="POOLED">
+                <!--连接属性-->
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <!-- [:] 后为默认值，若要是用默认值需开启启用默认值，需在properties中定义-->
+                <property name="username" value="${username:root}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+
+
     </environments>
     <!--然后加载mapper映射文件-->
     <mappers>
