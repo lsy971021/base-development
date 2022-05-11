@@ -1,5 +1,6 @@
 package com.lsy.test;
 
+import com.lsy.mapper.DepartmentMapper;
 import com.lsy.pojo.Department;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -13,16 +14,12 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * 未用mapper接口代理前
+ * 需在sqlMapperConfig中的mappers下开启扫包
  */
-public class SqlSessionTest {
+public class SqlSessionUseMapperTest {
 
     private SqlSessionFactory factory;
 
-    /**
-     * @Before 每次执行前先执行before
-     * @throws IOException
-     */
     @Before
     public void before() throws IOException {
         InputStream stream = Resources.getResourceAsStream("SqlMapperConfig.xml");
@@ -31,37 +28,42 @@ public class SqlSessionTest {
         //一个factory代表一个数据源，从创建开始一直运行
         //参数可指定environment（sqlMapperConfig.xml中配置的id）
         //第三个参数可指定properties属性，此优先级最高
-        factory = sqlSessionFactoryBuilder.build(stream,"development");
+        factory = sqlSessionFactoryBuilder.build(stream, "development");
     }
+
     @Test
-    public void insert(){
+    public void insert() {
         SqlSession session = factory.openSession();
-        Department department = new Department(){{
-           setAge(18);
-           setGender(1);
-           setName("刘亦菲");
-           setTeam("Princess");
+        //获取mapper接口
+        DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
+        Department department = new Department() {{
+            setAge(20);
+            setGender(1);
+            setName("刘亦菲");
+            setTeam("Princess");
         }};
-        // 根据第一个参数查找 DepartmentMapper.xml的id进行执行
-        int isSuccess = session.insert("insertOne", department);
+        int isSuccess = mapper.insert(department);
         //对数据库进行修改时需要提交操作
         session.commit();
         session.close();
-        System.out.println(isSuccess==1?"插入成功":"插入失败");
+        System.out.println(isSuccess == 1 ? "插入成功" : "插入失败");
     }
 
     @org.junit.Test
     public void findAll() {
         SqlSession session = factory.openSession();
-        List<Department> find = session.selectList("selectAll");
+        DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
+        List<Department> find = mapper.findAll();
         //添加log4j可查看控制台输出的sql语句动态拼接
         find.forEach(v -> System.out.println(v));
         session.close();
     }
+
     @org.junit.Test
-    public void findById(){
+    public void findById() {
         SqlSession session = factory.openSession();
-        Department department = session.selectOne("selectById",1);
+        DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
+        Department department = mapper.findById(2);
         System.out.println(department);
         session.close();
     }

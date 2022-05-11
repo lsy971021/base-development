@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
+<!--因为在pom文件中添加了可在此包下进行编译的插件  和  在SqlMapperConfig.xml中新增了映射(<mappers>中)，所以此文件可被SqlSessionTest执行-->
+
 <mapper namespace="com.lsy.mapper.DepartmentMapper">
 
-    <!--resultType可写别名，在config中有配置-->
-    <select id="findAll" resultType="dept">
+    <!--resultType、parameterType里可写别名，在config中有配置-->
+    <select id="selectAll" resultType="dept">
         select *
         from `department`
     </select>
 
-    <select id="findById" parameterType="int" resultType="dept">
+    <select id="selectById" parameterType="int" resultType="dept">
         select *
         from `department`
         where id = #{id}
     </select>
 
     <!--useGeneratedKeys 为是否启用主键自增(数据库也要设置主键递增)，keyColumn 为主键名-->
-    <insert id="insert" parameterType="dept" useGeneratedKeys="true" keyColumn="id">
+    <insert id="insertOne" parameterType="dept" useGeneratedKeys="true" keyColumn="id">
         insert into `department`
         values (null, #{name}, #{age}, #{gender}, #{team})
     </insert>

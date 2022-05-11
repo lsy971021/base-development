@@ -68,10 +68,11 @@
         </environment>
 
     </environments>
-    <!--然后加载mapper映射文件-->
+    <!--加载mapper映射文件-->
     <mappers>
         <!--一个一个的xml去找-->
-        <mapper resource="com/lsy/pojo/DepartmentMapper.xml"/>
+        <mapper resource="com/lsy/pojo/DepartmentV1Mappper.xml"/>
+        <mapper resource="com/lsy/mapper/DepartmentMapper.xml"/>
         <!--找某个包下的所有-->
 <!--        <package name="com.lsy.pojo"/>-->
     </mappers>
