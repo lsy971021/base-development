@@ -4,7 +4,20 @@
 <mapper namespace="com.lsy.mapper.DepartmentMapper">
 
     <!--resultType可写别名，在config中有配置-->
-    <select id="find" resultType="dept">
-        select * from `department`
+    <select id="findAll" resultType="dept">
+        select *
+        from `department`
     </select>
+
+    <select id="findById" parameterType="int" resultType="dept">
+        select *
+        from `department`
+        where id = #{id}
+    </select>
+
+    <!--useGeneratedKeys 为是否启用主键自增(数据库也要设置主键递增)，keyColumn 为主键名-->
+    <insert id="insert" parameterType="dept" useGeneratedKeys="true" keyColumn="id">
+        insert into `department`
+        values (null, #{name}, #{age}, #{gender}, #{team})
+    </insert>
 </mapper>
