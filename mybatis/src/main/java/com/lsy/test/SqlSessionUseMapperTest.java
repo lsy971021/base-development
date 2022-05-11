@@ -2,6 +2,7 @@ package com.lsy.test;
 
 import com.lsy.mapper.DepartmentMapper;
 import com.lsy.pojo.Department;
+import com.lsy.util.Page;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -65,6 +66,23 @@ public class SqlSessionUseMapperTest {
         DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
         Department department = mapper.findById(2);
         System.out.println(department);
+        session.close();
+    }
+
+
+    /**
+     * 利用自定的的工具类来实现分页
+     */
+    @Test
+    public void findByPage(){
+        SqlSession session = factory.openSession();
+        DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
+        Page page = new Page(){{
+            setPageIndex(1);
+            setShowdata(1);
+        }};
+        page.setList(mapper.findByPage(page));
+        page.getList().forEach(v -> System.out.println(v));
         session.close();
     }
 

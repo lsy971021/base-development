@@ -1,6 +1,7 @@
 package com.lsy.mapper;
 
 import com.lsy.pojo.Department;
+import com.lsy.util.Page;
 
 import java.util.List;
 
@@ -20,5 +21,11 @@ public interface DepartmentMapper {
 
     Department findById(int id);
 
+    Department findByName(String name);
+
     int insert(Department department);
+
+    int countAll();
+
+    List<Department> findByPage(Page page);
 }

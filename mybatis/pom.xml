@@ -26,6 +26,13 @@
             <artifactId>mybatis</artifactId>
             <version>3.5.3</version>
         </dependency>
+        <!--mybatis逆向工程，代码生成工具，需要mysql驱动包(mysql-connector-java)和此包，日志包slf4j-log4j12-->
+        <!--需要generatorConfig.xml  核心配置文件，可网上下载-->
+        <!--<dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.2</version>
+        </dependency>-->
     </dependencies>
 
     <!--maven默认只编译在resource下的xml和其他属性文件，此插件表示在下面两个路径下都要编译xml等-->
