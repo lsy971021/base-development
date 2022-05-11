@@ -2,6 +2,7 @@ package com.lsy.mapper;
 
 import com.lsy.pojo.Department;
 import com.lsy.util.Page;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -18,6 +19,12 @@ import java.util.List;
 public interface DepartmentMapper {
 
     List<Department> findAll();
+
+    /**
+     * 用于mybatis分页插件
+     * @return
+     */
+    List<Department> findByRowBounds(RowBounds rowBounds);
 
     Department findById(int id);
 

@@ -5,7 +5,7 @@
 <mapper namespace="com.lsy.mapper.DepartmentMapper">
 
     <!--resultType可写别名，在config中有配置-->
-    <select id="findAll" resultType="dept">
+    <select id="findAll" resultType="com.lsy.pojo.Department">
         select *
         from `department`
     </select>
@@ -21,6 +21,7 @@
         from `department`
         where name = #{name}
     </select>
+
     <select id="countAll" resultType="java.lang.Integer">
         select count(1)
         from `department`
@@ -30,6 +31,10 @@
     <select id="findByPage" resultType="com.lsy.pojo.Department">
         <bind name="beginindex" value="(pageIndex-1)*showdata"/>
         select * from `department` order by id limit #{beginindex},#{showdata}
+    </select>
+    <!--用于mybatis分页插件-->
+    <select id="findByRowBounds" resultType="com.lsy.pojo.Department">
+        select * from `department`
     </select>
 
     <!--useGeneratedKeys 为是否启用主键自增(数据库也要设置主键递增)，keyColumn 为主键名-->

@@ -4,6 +4,7 @@ import com.lsy.mapper.DepartmentMapper;
 import com.lsy.pojo.Department;
 import com.lsy.util.Page;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -83,6 +84,23 @@ public class SqlSessionUseMapperTest {
         }};
         page.setList(mapper.findByPage(page));
         page.getList().forEach(v -> System.out.println(v));
+        session.close();
+    }
+
+    /**
+     * mybatis分页插件，RowBounds
+     */
+    @Test
+    public void findByRowBounds(){
+        SqlSession session = factory.openSession();
+        DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
+        /**
+         * 第一个参数： 从第几页开始(0代表第一页)
+         * 第二个参数： 去多少条数据
+         */
+        RowBounds rb = new RowBounds(0,3);
+        List<Department> list = mapper.findByRowBounds(rb);
+        list.forEach(v -> System.out.println(v));
         session.close();
     }
 
