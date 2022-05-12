@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lsy.mapper.SubjectMapper">
+
+<resultMap id="lazeTest" type="subject">
+    <id column="id" property="id"/>
+    <result column="did" property="did"/>
+    <result column="course" property="course"/>
+    <result column="grade" property="grade"/>
+    <result column="ranking" property="ranking"/>
+    <association property="items" javaType="items"
+                 select="com.lsy.mapper.DepartmentMapper.findById" column="itemid"/>
+
+</resultMap>
+    <select id="findAll" resultType="com.lsy.pojo.Subject">
+        select * from subject
+    </select>
+    <select id="findById" resultType="com.lsy.pojo.Subject">
+        select * from subject where id=#{id}
+    </select>
+
+</mapper>
