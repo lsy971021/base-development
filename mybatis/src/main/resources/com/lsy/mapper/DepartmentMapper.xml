@@ -10,7 +10,7 @@
         from `department`
     </select>
 
-    <select id="findById" parameterType="int" resultType="dept">
+    <select id="findById" parameterType="int" resultType="com.lsy.pojo.Department">
         select *
         from `department`
         where id = #{id}

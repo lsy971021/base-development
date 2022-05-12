@@ -14,4 +14,8 @@ public class Subject {
     private int grade;
 
     private int ranking;
+    /**
+     * 多表联查时对应的department表  1对1
+     */
+    private Department department;
 }

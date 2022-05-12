@@ -30,8 +30,16 @@ public class LazyTest {
     public void findById() {
         SqlSession session = factory.openSession();
         SubjectMapper mapper = session.getMapper(SubjectMapper.class);
-        Subject department = mapper.findById(2);
+        Subject subject = mapper.findById(1);
         session.close();
-        System.out.println(department.getDid());
+        //未开启懒加载： 两个sql都会被执行
+        //开启懒加载： 若查询结果的属性都没被调用，则两个sql都不会被执行
+
+        //-----------------------------------------------
+
+        //开启懒加载和积极加载： 调用其中一个表的属性，两个sql都会被执行
+        //开启懒加载和消极加载： 调用其中一个表的属性，只有该表的sql会执行
+        System.out.println(subject.getDid());
+        System.out.println(subject.getDepartment());
     }
 }

@@ -3,22 +3,27 @@
 
 
 <mapper namespace="com.lsy.mapper.SubjectMapper">
-
-<resultMap id="lazeTest" type="subject">
-    <id column="id" property="id"/>
-    <result column="did" property="did"/>
-    <result column="course" property="course"/>
-    <result column="grade" property="grade"/>
-    <result column="ranking" property="ranking"/>
-    <association property="items" javaType="items"
-                 select="com.lsy.mapper.DepartmentMapper.findById" column="itemid"/>
-
-</resultMap>
+    <!--字段映射： type=返回类型为Subject类  column=数据库字段名  property=实体类字段名-->
+    <resultMap id="lazeTest" type="com.lsy.pojo.Subject">
+        <id column="id" property="id"/>
+        <result column="did" property="did"/>
+        <result column="course" property="course"/>
+        <result column="grade" property="grade"/>
+        <result column="ranking" property="ranking"/>
+        <!--多表联查 == association标签  会执行对应的sql-->
+        <!--property为实体类中关联表的实体类字段名，javaType为返回值类型-->
+        <!--若要使当前标签拥有延迟加载的能力，
+        要添加select(执行的语句,对应其mapper文件namespace下的id值)属性和column(该表查询返回结果集中，作为条件去查询关联的对象的列)-->
+        <association property="department" javaType="com.lsy.pojo.Department"
+                     select="com.lsy.mapper.DepartmentMapper.findById" column="did"/>
+    </resultMap>
     <select id="findAll" resultType="com.lsy.pojo.Subject">
-        select * from subject
+        select *
+        from subject
     </select>
-    <select id="findById" resultType="com.lsy.pojo.Subject">
-        select * from subject where id=#{id}
+
+    <select id="findById" resultMap="lazeTest">
+        select * from subject where id = #{id}
     </select>
 
 </mapper>
