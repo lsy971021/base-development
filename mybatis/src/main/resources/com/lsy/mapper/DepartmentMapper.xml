@@ -31,6 +31,7 @@
     </select>
 
     <!--利用pege工具类构造分页-->
+    <!--bind标签用于模糊查询的模版-->
     <select id="findByPage" resultType="dept">
         <bind name="beginindex" value="(pageIndex-1)*showdata"/>
         select * from `department` order by id limit #{beginindex},#{showdata}
