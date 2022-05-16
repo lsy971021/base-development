@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
+ * 改用mapper代理
  * 需在sqlMapperConfig中的mappers下开启扫包
  */
 public class SqlSessionUseMapperTest {

@@ -2,8 +2,10 @@ package com.lsy.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Department {
+public class Department implements Serializable {
 
     private int id;
 

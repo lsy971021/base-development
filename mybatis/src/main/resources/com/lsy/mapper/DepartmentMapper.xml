@@ -4,19 +4,22 @@
 
 <mapper namespace="com.lsy.mapper.DepartmentMapper">
 
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
     <!--resultType可写别名，在config中有配置-->
-    <select id="findAll" resultType="com.lsy.pojo.Department">
+    <!--useCache="false"  不使用二级缓存-->
+    <select id="findAll" resultType="dept" useCache="false">
         select *
         from `department`
     </select>
 
-    <select id="findById" parameterType="int" resultType="com.lsy.pojo.Department">
+    <select id="findById" parameterType="int" resultType="dept">
         select *
         from `department`
         where id = #{id}
     </select>
 
-    <select id="findByName" resultType="com.lsy.pojo.Department">
+    <select id="findByName" resultType="dept">
         select *
         from `department`
         where name = #{name}
@@ -28,17 +31,19 @@
     </select>
 
     <!--利用pege工具类构造分页-->
-    <select id="findByPage" resultType="com.lsy.pojo.Department">
+    <select id="findByPage" resultType="dept">
         <bind name="beginindex" value="(pageIndex-1)*showdata"/>
         select * from `department` order by id limit #{beginindex},#{showdata}
     </select>
     <!--用于mybatis分页插件-->
-    <select id="findByRowBounds" resultType="com.lsy.pojo.Department">
-        select * from `department`
+    <select id="findByRowBounds" resultType="dept">
+        select *
+        from `department`
     </select>
 
     <!--useGeneratedKeys 为是否启用主键自增(数据库也要设置主键递增)，keyColumn 为主键名-->
-    <insert id="insert" parameterType="dept" useGeneratedKeys="true" keyColumn="id">
+    <!--flushCache 默认是开启的，insert,update,delete操作数据后需要刷新二级缓存-->
+    <insert id="insert" parameterType="dept" useGeneratedKeys="true" keyColumn="id" flushCache="true">
         insert into `department`
         values (null, #{name}, #{age}, #{gender}, #{team})
     </insert>

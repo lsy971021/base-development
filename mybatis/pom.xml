@@ -16,6 +16,9 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
     <dependencies>
+        <!--mybatis -->
+        <!--父工程的 slf4j-log4j12 依赖可输出mysql日志(sql语句) -->
+        <!--父工程的 mysql-connector-java 依赖,mysql连接 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -33,6 +36,19 @@
             <artifactId>mybatis-generator-core</artifactId>
             <version>1.3.2</version>
         </dependency>-->
+
+        <!--mybatis二级缓存(下面两个依赖) -->
+        <dependency>
+            <groupId>org.mybatis.caches</groupId>
+            <artifactId>mybatis-ehcache</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
     </dependencies>
 
     <!--maven默认只编译在resource下的xml和其他属性文件，此插件表示在下面两个路径下都要编译xml等-->

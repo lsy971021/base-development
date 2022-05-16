@@ -11,6 +11,9 @@ import org.junit.Before;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * 懒加载
+ */
 public class LazyTest {
 
     private SqlSessionFactory factory;
