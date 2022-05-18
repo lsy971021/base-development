@@ -1,8 +1,9 @@
 package com.lsy.thread;
 
-import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
 
 public class ThreadPoolV1 {
@@ -49,9 +50,14 @@ public class ThreadPoolV1 {
     @Test
     public void Rejected(){
         //默认拒绝策略
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(0, 3,
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 3,
                 60, TimeUnit.SECONDS,
-                new LinkedBlockingQueue<>(5));
+                new LinkedBlockingQueue<>(5), new RejectedExecutionHandler() {
+            @Override
+            public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
+                System.out.println("线程池已满，请别放任务了");
+            }
+        });
         //最大线程数 3  +  队列大小 5  等于  最多执行任务数  8
         //超过最大任务数就会执行拒绝策略
 
@@ -84,6 +90,41 @@ public class ThreadPoolV1 {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
 
+
+    /**
+     * 模仿线程池submit后任务为执行完成，主线程return
+     */
+    ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 3,
+            60, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(5));
+    @Test
+    public void returnTest() throws InterruptedException {
+        System.out.println(asynchronization());
+        threadPoolExecutor.submit(()-> System.out.println("!!!!"));
+        Thread.sleep(2000);
+    }
+
+    public List<String> asynchronization() throws InterruptedException {
+        List<String> list = new ArrayList<>();
+        threadPoolExecutor.submit(()->{
+            //模仿业务处理
+            try {
+                System.out.println("start");
+                Thread.sleep(3000);
+                System.out.println("end");
+                list.add("ok");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        /**
+         * 若没有awaitTermination将可能返回空list
+         */
+//        threadPoolExecutor.shutdown();
+        threadPoolExecutor.awaitTermination(4,TimeUnit.MINUTES);
+        return list;
     }
 }
