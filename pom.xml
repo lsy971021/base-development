@@ -14,10 +14,11 @@
         <module>leetcode</module>
         <module>rocketMQ-demo</module>
         <module>RocketMQ-consumer-demo</module>
-        <module>mybatis</module>
-        <module>mybatis-plus</module>
+        <module>mybatis-all/mybatis</module>
+        <module>mybatis-all/mybatis-plus</module>
         <module>springCloud-demo</module>
         <module>webMagic</module>
+        <module>mybatis-all</module>
     </modules>
 
     <properties>
