@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    #????????? / ??????? http://???:???/context-path/uri
+    #跟路径：localhost:端口号/context-path/uri
     context-path: /root
 
 
@@ -12,7 +12,7 @@ spring:
     password: Liusiyuan1
   jpa:
     hibernate:
-      # ????????
+      # 自动建表
       ddl-auto: update
-      #??????sql
+      #在控制台输出sql
     show-sql: true

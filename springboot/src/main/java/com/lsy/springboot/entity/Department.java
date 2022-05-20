@@ -15,11 +15,12 @@ import javax.persistence.*;
 //          @Transient : 表示不需要映射的列，ORM框架将忽略该属性.
 @Data
 @Entity
-//@Table(name = "department")
+@Table(name = "department")
 public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     private String name;
