@@ -1,6 +1,6 @@
 package com.lsy.springboot.service;
 
-public interface TestService {
+public interface JpaTestService {
 
     void test();
 }

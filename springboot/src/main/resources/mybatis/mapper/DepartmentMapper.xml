@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lsy.springboot.mapper.DepartmentMapper">
+
+    <!--和实体类做映射-->
+    <resultMap id="BaseResultMap" type="com.lsy.springboot.pojo.Department">
+        <id column="id" javaType="int" property="id"/>
+        <result column="age" javaType="int" property="age"/>
+        <result property="gender" column="gender"/>
+        <result property="name" column="name"/>
+        <result property="team" column="team"/>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="BaseResultMap">
+        select *
+        from `department`
+        where id = #{id}
+    </select>
+
+</mapper>

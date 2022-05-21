@@ -1,7 +1,6 @@
 package com.lsy.springboot.entity;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.*;
 

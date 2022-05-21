@@ -16,3 +16,9 @@ spring:
       ddl-auto: update
       #在控制台输出sql
     show-sql: true
+
+mybatis:
+  #用来实例化mapper的接口,找有@Mapper的注解去实例化 （接口本身不能被实例化，需要有实现才能被实例化）,或在启动类上添加@MapperScan
+#  type-aliases-package: com.lsy.springboot.mapper
+  #对应的sql映射，必须要!  classpath指的是resource下的文件夹
+  mapper-locations: classpath:mybatis/mapper/*.xml

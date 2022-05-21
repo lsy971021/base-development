@@ -2,14 +2,14 @@ package com.lsy.springboot.service.impl;
 
 import com.lsy.springboot.entity.Department;
 import com.lsy.springboot.repository.DepartmentRepository;
-import com.lsy.springboot.service.TestService;
+import com.lsy.springboot.service.JpaTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TestServiceImpl implements TestService {
+public class JpaTestServiceImpl implements JpaTestService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
