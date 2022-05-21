@@ -18,8 +18,8 @@
         from `department`
         where id = #{id}
     </select>
-    <select id="findAll" resultType="com.lsy.springboot.pojo.Department">
+    <!--<select id="findAll" resultType="com.lsy.springboot.pojo.Department">
         select * from department
-    </select>
+    </select>-->
 
 </mapper>

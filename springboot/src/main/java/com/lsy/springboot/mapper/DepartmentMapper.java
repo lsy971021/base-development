@@ -14,6 +14,6 @@ public interface DepartmentMapper {
 //    @Select("select * from department where id=#{id}")
     Department findById(Integer id);
 
-//    @Select("select * from department")
+    @Select("select * from department")
     List<Department> findAll();
 }
