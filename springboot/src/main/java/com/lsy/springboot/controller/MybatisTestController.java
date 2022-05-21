@@ -16,4 +16,9 @@ public class MybatisTestController {
     public Department findAll(@PathVariable(value = "id") Integer id){
         return mybatisTestService.findById(id);
     }
+
+    @GetMapping("/test/findAll")
+    public void findAll(){
+        mybatisTestService.findAll();
+    }
 }

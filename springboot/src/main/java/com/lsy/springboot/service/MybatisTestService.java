@@ -5,7 +5,7 @@ import com.lsy.springboot.pojo.Department;
 
 public interface MybatisTestService {
 
-    public void findAll();
+    void findAll();
 
     Department findById(Integer id);
 }
