@@ -5,6 +5,9 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+/**
+ * 写自旋锁时（for 死循环，在）在循环内的最后要加  Thread.yield()
+ */
 public class CAS {
     static Unsafe unsafe;
     private static volatile long state = 0;
