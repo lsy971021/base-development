@@ -22,3 +22,6 @@ mybatis:
 #  type-aliases-package: com.lsy.springboot.mapper
   #对应的sql映射，必须要!  classpath指的是resource下的文件夹
   mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    # todo 开启mybatis驼峰式命名规则自动转换 ??  不生效
+    map-underscore-to-camel-case: false
