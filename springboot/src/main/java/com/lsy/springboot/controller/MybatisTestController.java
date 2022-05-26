@@ -1,5 +1,6 @@
 package com.lsy.springboot.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.lsy.springboot.pojo.Department;
 import com.lsy.springboot.service.MybatisTestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,14 @@ public class MybatisTestController {
     }
 
     @GetMapping("/test/findAll")
-    public void findAll(){
-        mybatisTestService.findAll();
+    public PageInfo findAll(){
+        return mybatisTestService.findAll();
     }
+
+    @GetMapping("/test/insert")
+    public void insert(){
+        mybatisTestService.insert();
+    }
+
+
 }

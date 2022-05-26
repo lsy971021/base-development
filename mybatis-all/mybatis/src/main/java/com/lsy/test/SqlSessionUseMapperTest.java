@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,8 +43,9 @@ public class SqlSessionUseMapperTest {
         Department department = new Department() {{
             setAge(20);
             setGender(1);
-            setName("刘亦菲");
+            setName("菲菲");
             setTeam("Princess");
+            setCreateTime(new Date());
         }};
         int isSuccess = mapper.insert(department);
         //对数据库进行修改时需要提交操作
@@ -66,7 +68,7 @@ public class SqlSessionUseMapperTest {
     public void findById() {
         SqlSession session = factory.openSession();
         DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
-        Department department = mapper.findById(2);
+        Department department = mapper.findById(12);
         System.out.println(department);
         session.close();
     }

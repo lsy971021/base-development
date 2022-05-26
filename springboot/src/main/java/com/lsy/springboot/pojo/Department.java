@@ -2,6 +2,8 @@ package com.lsy.springboot.pojo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * mybatis用
  */
@@ -16,5 +18,7 @@ public class Department {
     private int gender;
 
     private String team;
+
+    private Date creatTime;
 
 }

@@ -46,6 +46,6 @@
     <!--flushCache 默认是开启的，insert,update,delete操作数据后需要刷新二级缓存-->
     <insert id="insert" parameterType="dept" useGeneratedKeys="true" keyColumn="id" flushCache="true">
         insert into `department`
-        values (null, #{name}, #{age}, #{gender}, #{team})
+        values (null, #{name}, #{age}, #{gender}, #{team},#{createTime})
     </insert>
 </mapper>

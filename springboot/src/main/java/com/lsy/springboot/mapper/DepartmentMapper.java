@@ -1,6 +1,7 @@
 package com.lsy.springboot.mapper;
 
 import com.lsy.springboot.pojo.Department;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -16,4 +17,7 @@ public interface DepartmentMapper {
 
     @Select("select * from department")
     List<Department> findAll();
+
+    @Insert("insert into department(name,age,gender,team,create_time) values (#{name},#{age},#{gender},#{team},#{createTime})")
+    int insert(Department department);
 }

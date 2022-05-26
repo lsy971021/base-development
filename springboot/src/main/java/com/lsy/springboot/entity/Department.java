@@ -3,6 +3,7 @@ package com.lsy.springboot.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 // jpa 需要加的注解：
 //          @Entity：跟数据库关联为实体类     ==== 必须要加此注解
@@ -29,6 +30,8 @@ public class Department {
     private int gender;
 
     private String team;
+
+    private Date createTime;
 
     @Transient
     private String other;
