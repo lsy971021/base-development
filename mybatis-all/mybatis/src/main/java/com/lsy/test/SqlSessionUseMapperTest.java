@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +56,14 @@ public class SqlSessionUseMapperTest {
         System.out.println(isSuccess == 1 ? "插入成功" : "插入失败");
     }
 
+    @Test
+    public void getNowDate() throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
+        String date = sdf.format(new Date(System.currentTimeMillis()));
+        String date2 = sdf.format(new Date());
+        System.out.println(date);
+        System.out.println(date2);
+    }
     @org.junit.Test
     public void findAll() {
         SqlSession session = factory.openSession();
