@@ -64,6 +64,7 @@ public class ThreadPoolV2 {
 
         myThreadPool.execute(()->{
             System.out.println("hello,world");
+            // 模拟报错，会在afterExecute()中处理，和在uncaughtException（）中处理未捕获异常
             int i = 10 /0;
         });
 
