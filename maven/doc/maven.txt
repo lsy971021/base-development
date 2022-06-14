@@ -1,0 +1,20 @@
+运行maven命令实际上是执行了Java命令
+通常需要设置MAVEN_OPT的值为 - Xms128m -Xmx512m,因为java默认的最大可用内存往往不能满足Maven运行的需要
+
+maven 配置文件：
+    全局：M2_HOME/conf/settings.xml
+    用户范围： ~/.m2/settings.xml
+
+POM（项目对象模型） ： project object model
+    groupId:项目所在的组织或公司
+    artifactId:组中唯一id
+    name:对于用户更为友好的项目名称
+
+
+
+命令(项目根目录)：
+    mvn clean compile ： 编译
+    mvn clean test : 测试
+    mvn clean package : 打包，默认打包类型jar
+    mvn clean install : 安装,下载依赖到本地
+    jar -xvf xxx.jar : 解压jar包
