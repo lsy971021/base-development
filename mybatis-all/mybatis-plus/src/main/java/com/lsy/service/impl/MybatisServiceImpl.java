@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lsy.model.User;
 import com.lsy.mapper.UserMapper;
 import com.lsy.service.MybatisService;
@@ -59,15 +62,42 @@ public class MybatisServiceImpl implements MybatisService {
         System.out.println(delete);
     }
 
+    /**
+     * IPage
+     * @return
+     */
     @Override
-    public Page<User> page() {
-        Page<User> page = new Page<>(2,3);
-        return userMapper.selectPage(page,null);
+    public IPage<User> page() {
+        // isSearchCount : 是否查询总量
+        IPage<User> page = new Page(2,3);
+        IPage<User> userIPage = userMapper.selectPage(page, null);
+        // 获取查询列表
+        List<User> users = userIPage.getRecords();
+        //获取总页数
+        long pages = userIPage.getPages();
+        return userIPage;
     }
 
     @Override
     public void findBySql() {
         System.out.println(userMapper.find());
+    }
+
+    /**
+     * pageHelper
+     * @return
+     */
+    @Override
+    public PageInfo<User> pageHelper() {
+        int pageIndex = 1;
+        int pageSize = 10;
+        //count: 是否查询count，默认开启
+        //orderBy : 排序
+        PageHelper.startPage(pageIndex,pageSize,"id desc");
+        List<User> users = userMapper.find();
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        pageInfo.setList(users);
+        return pageInfo;
     }
 
 }

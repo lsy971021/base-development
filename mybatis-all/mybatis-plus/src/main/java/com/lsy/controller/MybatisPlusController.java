@@ -1,6 +1,8 @@
 package com.lsy.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import com.lsy.model.User;
 import com.lsy.service.MybatisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +39,13 @@ public class MybatisPlusController {
     }
 
     @PostMapping("/page")
-    public Page<User> deleteBySomething(){
+    public IPage<User> deleteBySomething(){
         return mybatisService.page();
+    }
+
+    @PostMapping("/pageHelper")
+    public PageInfo<User> pageHelper(){
+        return mybatisService.pageHelper();
     }
 
     @GetMapping("/findBySql")

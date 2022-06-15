@@ -1,6 +1,8 @@
 package com.lsy.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import com.lsy.model.User;
 
 public interface MybatisService {
@@ -14,7 +16,9 @@ public interface MybatisService {
 
     void deleteBySomething(String something);
 
-    Page<User> page();
+    IPage<User> page();
 
     void findBySql();
+
+    PageInfo<User> pageHelper();
 }
