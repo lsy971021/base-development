@@ -7,6 +7,14 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class ThreadPoolV1 {
+    /**
+     * 获取cpu核心数
+     */
+    @Test
+    public void getAvailableProcessors(){
+        int num = Runtime.getRuntime().availableProcessors();
+        System.out.println(num);
+    }
     public static void main(String[] args) {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
                 Runtime.getRuntime().availableProcessors(),

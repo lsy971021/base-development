@@ -9,7 +9,13 @@ POM（项目对象模型） ： project object model
     groupId:项目所在的组织或公司
     artifactId:组中唯一id
     name:对于用户更为友好的项目名称
-
+    依赖范围：
+        compile: 编译依赖范围
+        test:
+        provided:
+        runtime:
+        system:
+        import
 
 
 命令(项目根目录)：
