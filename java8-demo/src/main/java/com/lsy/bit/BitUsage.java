@@ -37,5 +37,13 @@ public class BitUsage {
         System.out.println(b + "源码=" + Integer.toBinaryString(b));
         System.out.println("a交换结果=" + (a ^ a ^ b));
         System.out.println("b交换结果=" + (b ^ b ^ a));
+
+        a = a ^ b;
+        b = a ^ b;
+        a = a ^ b;
+        System.out.println("交换后的a="+a);
+        System.out.println("交换后的b="+b);
+
+
     }
 }
