@@ -28,6 +28,7 @@ public class BitUsage {
 
     /**
      * 两个数交换值，不借助中间变量
+     * ^:按位异或，不同为1，相同为0
      */
     @Test
     public void exchange() {
@@ -38,12 +39,22 @@ public class BitUsage {
         System.out.println("a交换结果=" + (a ^ a ^ b));
         System.out.println("b交换结果=" + (b ^ b ^ a));
 
-        a = a ^ b;
-        b = a ^ b;
-        a = a ^ b;
-        System.out.println("交换后的a="+a);
-        System.out.println("交换后的b="+b);
+        a = a ^ b; // a ^= b
+        b = a ^ b; // b ^= b
+        a = a ^ b; // a ^= b
+        System.out.println("交换后的a=" + a);
+        System.out.println("交换后的b=" + b);
+    }
 
 
+    /**
+     * 判断两个数正负号是否相同
+     */
+    @Test
+    public void isSameSymbol() {
+        int a = 10;
+        int b = -11;
+        boolean same = (a ^ b) > 0;
+        System.out.println(same);
     }
 }
