@@ -57,4 +57,43 @@ public class BitUsage {
         boolean same = (a ^ b) > 0;
         System.out.println(same);
     }
+
+
+    /**
+     * 判断两个数中较大的数
+     */
+    @Test
+    public void compare() {
+        //2147483647
+        int a = Integer.MAX_VALUE;
+        //-2147483648
+        int b = Integer.MIN_VALUE;
+        int c = a- b;
+        //todo 会发生溢出
+        int sign = sign(c);
+        //1：正 0：负
+        System.out.println(sign);
+        //int最大值 - int最小值 = -1 （溢出则为-1）
+        System.out.println(a+b);
+    }
+
+    /**
+     * 判断正负号
+     *
+     * @param i 输入的数
+     * @return 返回正负号 1：正 0：负
+     */
+    public int sign(int i) {
+        return flip((i >> 31) & 1);
+    }
+
+    /**
+     * 判断是0还是1
+     *
+     * @param i 输入的数
+     * @return 如果i是0 则返回1 如果i是1 则返回0
+     */
+    public int flip(int i) {
+        return i ^ 1;
+    }
 }
