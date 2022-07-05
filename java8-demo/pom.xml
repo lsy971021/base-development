@@ -92,6 +92,12 @@
             <artifactId>pdfbox-tools</artifactId>
             <version>2.0.24</version>
         </dependency>
+        <!--google对bitmap的实现，底层进行了压缩处理，所以在bitmap不是完全连续的情况下，占用空间会小，而且提供的api也比较丰富-->
+        <dependency>
+            <groupId>com.googlecode.javaewah</groupId>
+            <artifactId>JavaEWAH</artifactId>
+            <version>1.1.6</version>
+        </dependency>
     </dependencies>
 
     <properties>
