@@ -31,10 +31,16 @@ POM（项目对象模型） ： project object model     （生成的jar文件�
     依赖调解：
             第一原则：当依赖多个模块又重复的依赖时，路径最近的优先被传递 (如: A->B->C->X(1.0)->D->X(2.0),则会选择X(1.0))
             第二原则：第一原则优先，当依赖路径长度一样，从Maven 2.0.9版本开始，在pom中依赖声明的顺序决定谁会被解析 （如 A->B->Y(1.0) X(1.0)、A->C->X(2.0),则X(2.0会被引用)）
-
+    优化依赖：
+            maven会自动解析所有项目的直接依赖和传递依赖，对一些依赖冲突进行调节，以确保一个构件只有唯一的版本在依赖中存在,maven解析后会生成一个依赖树，通过树就能看到某个依赖是通过哪条传递路径引入的
 命令(项目根目录)：
     mvn clean compile ： 编译
     mvn clean test : 测试
     mvn clean package : 打包，默认打包类型jar
     mvn clean install : 安装,下载依赖到本地
     jar -xvf xxx.jar : 解压jar包
+    mvn dependency:list : 查看当前项目以解析的依赖(对应上面的优化依赖)
+    mvn dependency:tree : 查看当前项目以解析的依赖树(对应上面的优化依赖)
+    mvn dependency:analyze : （编译主代码和测试代码需要用到的依赖： import声明。一些测试和运行时需要的依赖他就发现不了了，如spring-core和spring-beans是运行Spring Framework必要的类库）
+        Used undeclared dependencies found:使用到的，但没有显示声明的依赖(依赖中的依赖)，可能存在潜在的风险，当升级直接依赖时，相关传递性的依赖版本也可能发生变化
+        Unused declared dependencies found:声明但未使用的
