@@ -1,6 +1,9 @@
 package com.lsy.bit;
 
+import com.googlecode.javaewah.EWAHCompressedBitmap;
 import org.junit.Test;
+
+import java.util.BitSet;
 
 /**
  * 位运算场景
@@ -68,13 +71,13 @@ public class BitUsage {
         int a = Integer.MAX_VALUE;
         //-2147483648
         int b = Integer.MIN_VALUE;
-        int c = a- b;
+        int c = a - b;
         //todo 会发生溢出
         int sign = sign(c);
         //1：正 0：负
         System.out.println(sign);
         //int最大值 - int最小值 = -1 （溢出则为-1）
-        System.out.println(a+b);
+        System.out.println(a + b);
     }
 
     /**
@@ -95,5 +98,38 @@ public class BitUsage {
      */
     public int flip(int i) {
         return i ^ 1;
+    }
+
+
+    /**
+     * java提供的bitset
+     * 有着显著的缺点，比如一个极端情况，一个bitmap只有两个位有数据，0和10000000，BitSet会把中间空的地方也初始化10000-1)/64 + 1个数组，
+     * 这样浪费了很大的空间，其实按中间的这些空数组，完全可以通过offset的概念给压缩掉，能省下很大的空间
+     * 和redis一样浪费空间
+     */
+    @Test
+    public void bitSet(){
+        BitSet bitSet = new BitSet(1000);
+        bitSet.set(10);
+        boolean b = bitSet.get(10);
+        boolean b1 = bitSet.get(1);
+    }
+
+    /**
+     * google对bitmap的实现，底层进行了压缩处理，所以在bitmap不是完全连续的情况下，占用空间会小，而且提供的api也比较丰富
+     */
+    @Test
+    public void googleBitMap() {
+        EWAHCompressedBitmap bitmap = new EWAHCompressedBitmap();
+        int[] arry1 = {0, 1, 2};
+        int[] arry2 = {0, 4, 5};
+        EWAHCompressedBitmap m1 = EWAHCompressedBitmap.bitmapOf(arry1);
+        EWAHCompressedBitmap m2 = EWAHCompressedBitmap.bitmapOf(arry2);
+        EWAHCompressedBitmap and =m1.and(m2);
+        EWAHCompressedBitmap or =m1.or(m2);
+
+        int[]andArray=and.toArray();
+        int[]orArray=or.toArray();
+
     }
 }
