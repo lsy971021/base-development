@@ -108,7 +108,7 @@ public class BitUsage {
      * 和redis一样浪费空间
      */
     @Test
-    public void bitSet(){
+    public void bitSet() {
         BitSet bitSet = new BitSet(1000);
         bitSet.set(10);
         boolean b = bitSet.get(10);
@@ -121,15 +121,66 @@ public class BitUsage {
     @Test
     public void googleBitMap() {
         EWAHCompressedBitmap bitmap = new EWAHCompressedBitmap();
+        boolean set = bitmap.set(10);
+        System.out.println(set);
+        System.out.println(bitmap.get(11));
+
+
         int[] arry1 = {0, 1, 2};
         int[] arry2 = {0, 4, 5};
         EWAHCompressedBitmap m1 = EWAHCompressedBitmap.bitmapOf(arry1);
         EWAHCompressedBitmap m2 = EWAHCompressedBitmap.bitmapOf(arry2);
-        EWAHCompressedBitmap and =m1.and(m2);
-        EWAHCompressedBitmap or =m1.or(m2);
+        EWAHCompressedBitmap and = m1.and(m2);
+        EWAHCompressedBitmap or = m1.or(m2);
 
-        int[]andArray=and.toArray();
-        int[]orArray=or.toArray();
+        int[] andArray = and.toArray();
+        int[] orArray = or.toArray();
 
+    }
+
+
+    /**
+     * 平均数  （用位避免了相加时int溢出）
+     */
+    @Test
+    public void average() {
+        int a = 100;
+        int b = 123;
+        int c = a & b;
+        int d = a ^ b;
+        System.out.println(a + "&" + b + "=" + c);
+        System.out.println(a + "^" + b + "=" + d);
+        // 计算平均数
+        System.out.println("平均数=" + c + (d >> 1));
+    }
+
+    /**
+     * 绝对值
+     */
+    @Test
+    public void abs() {
+        int a = -99;
+        int b;
+        b = a >> 31;
+        int c = (a ^ b) - b;
+        System.out.println(a + "的绝对值是" + c);
+    }
+
+    /**
+     * 相反数
+     */
+    @Test
+    public void opposite() {
+        int a = 1000;
+        int d = ~a + 1;
+        System.out.println(a + "的相反数为" + d);
+    }
+
+    @Test
+    public void test() {
+        int a = 100;
+        int b = 243;
+        System.out.println(Integer.toBinaryString(a));
+        System.out.println(Integer.toBinaryString(b));
     }
 }
