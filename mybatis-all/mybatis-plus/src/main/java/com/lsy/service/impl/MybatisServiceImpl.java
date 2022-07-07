@@ -47,11 +47,19 @@ public class MybatisServiceImpl implements MybatisService {
         users.forEach(System.out::println);
     }
 
+    /**
+     * mybatisplus 更新时默认对值为null的属性不处理（即若某属性为null，不更新这个字段，可能造成若要更新某个字段为null失败）
+     * 需要加此注解和属性来生效： @TableField(updateStrategy = FieldStrategy.IGNORED)
+     * @param user
+     */
     @Override
     public void updateBySomething(User user) {
         LambdaUpdateWrapper<User> wrapper = new UpdateWrapper<User>().lambda();
         wrapper.eq(User::getId,user.getId());
-        int update = userMapper.update(user, wrapper);
+        wrapper.set(User::getEmail,null);
+        //若user中其他属性未赋值(即null值)，则不会更新这些值,wrapper的会生效
+//        int update = userMapper.update(user, wrapper);
+        int update = userMapper.updateById(user);
 //        int update = userMapper.update(user, null);
         System.out.println(update);
     }

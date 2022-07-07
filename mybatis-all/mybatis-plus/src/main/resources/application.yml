@@ -1,8 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/devs
+    url: jdbc:mysql://localhost:3306/devs?autoReconnect=true
     username: root
+    password: Liusiyuan1
 mybatis-plus:
   #mapper映射
   mapper-locations: classpath*:mapper/**/*.xml
