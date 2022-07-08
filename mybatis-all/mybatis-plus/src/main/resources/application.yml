@@ -10,4 +10,5 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-
+      #只更新/插入 非null字段 todo：待确认
+      field-strategy: not_null
