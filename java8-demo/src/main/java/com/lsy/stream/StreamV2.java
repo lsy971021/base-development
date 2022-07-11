@@ -64,6 +64,22 @@ public class StreamV2 {
     }
 
     /**
+     * peek使用：遍历操作，与forEach类似，但不会销毁流元素
+     */
+    @Test
+    public void peek() {
+        int i = 1;
+        lists.stream().peek(x -> {
+            String anni = x.get("name");
+            if (anni.equals("lsy:3"))
+                System.out.println("==="+x);
+
+        }).forEach(x -> {
+            System.out.println(x);
+        });
+    }
+
+    /**
      * 元素求和/乘积  (reduce)
      */
     @Test
@@ -202,7 +218,7 @@ public class StreamV2 {
      * 归约(reducing)
      */
     @Test
-    public void test9(){
+    public void test9() {
         Integer all = personList.stream().map(Person::getSalary).collect(Collectors.reducing((x, y) -> x + y)).get();
         System.out.println(all);
         Integer allSalary = personList.stream().collect(Collectors.reducing(0, Person::getSalary, (i, j) -> (i + j - 2000)));
@@ -213,7 +229,7 @@ public class StreamV2 {
      * 排序(sorted)
      */
     @Test
-    public void test10(){
+    public void test10() {
         //先按年龄倒序排列，再按薪资排序
         List<Person> l = personList.stream().
                 sorted(Comparator.comparing(Person::getAge).reversed().
@@ -225,13 +241,13 @@ public class StreamV2 {
      * 提取/组合
      */
     @Test
-    public void test11(){
-        Integer[] s1 = {1,2,3,4,5,6};
-        Integer[] s2 = {5,6,7,8,9,0};
+    public void test11() {
+        Integer[] s1 = {1, 2, 3, 4, 5, 6};
+        Integer[] s2 = {5, 6, 7, 8, 9, 0};
         Stream<Integer> a = Stream.of(s1);
         Stream<Integer> b = Stream.of(s2);
         //组合后去重
-        List<Integer> distinct = Stream.concat(a,b).distinct().collect(Collectors.toList());
+        List<Integer> distinct = Stream.concat(a, b).distinct().collect(Collectors.toList());
         System.out.println(distinct);
     }
 }

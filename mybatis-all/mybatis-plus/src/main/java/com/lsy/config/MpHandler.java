@@ -38,7 +38,8 @@ public class MpHandler implements MetaObjectHandler {
         //参数2： 字段名
         //参数3： 字段class类型
         //参数4： 对字段赋值
-        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
+//        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
+        setFieldValByName("createTime",LocalDateTime.now(),metaObject);
     }
 
     /**
@@ -59,6 +60,7 @@ public class MpHandler implements MetaObjectHandler {
             log.info("updateTime以被赋值");
             return;
         }
-        strictUpdateFill(metaObject,"updateTime",LocalDateTime.class, LocalDateTime.now());
+//        strictUpdateFill(metaObject,"updateTime",LocalDateTime.class, LocalDateTime.now());
+        setFieldValByName("updateTime",LocalDateTime.now(),metaObject);
     }
 }
