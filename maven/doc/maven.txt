@@ -33,6 +33,35 @@ POM（项目对象模型） ： project object model     （生成的jar文件�
             第二原则：第一原则优先，当依赖路径长度一样，从Maven 2.0.9版本开始，在pom中依赖声明的顺序决定谁会被解析 （如 A->B->Y(1.0) X(1.0)、A->C->X(2.0),则X(2.0会被引用)）
     优化依赖：
             maven会自动解析所有项目的直接依赖和传递依赖，对一些依赖冲突进行调节，以确保一个构件只有唯一的版本在依赖中存在,maven解析后会生成一个依赖树，通过树就能看到某个依赖是通过哪条传递路径引入的
+
+仓库：
+    自定义本地仓库目录地址，可编辑 ~/.m2/settings.xml 设置(默认情况该文件是不存在的，需从Maven的安装目录复制 $M2_HOME/conf/settings.xml【此文件为全局xml文件】)
+        <settings>
+            <localRepository>/xxx/xxx/repository</localRepository>
+        </settings>
+    配置远程仓库：
+        <project>
+            ...
+            <repositories>
+                <id>jboss</id>
+                <name>JBoss Repository</name>
+                <url>http://xxxxx.com/maven2/</url>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>false</enabled>
+                    <updatePolicy>daily</updatePolicy>    //用来配置maven从远程仓库检查更新的频率，默认是daily（never:从不、always:每次构件都检查更新、interval:X:每隔X分钟检查一次更新）
+                    <checksumPolicy>ignore</checksumPolicy> //用来配置maven检查检验和文件的策略，当构件被部署到maven仓库中时，会同时部署对应的校验和文件，在下载构件时会验证校验和文件，如果验证失败，当checksumPolicy为默认的warn时，输出警告信息（fail:让构件失败、ignored:完全忽略）
+                </snapshots>
+                <layout>default</layout>
+            </repositories>
+        </project>
+
+        任何一个仓库声明的id必须是唯一的，maven自带的中央仓库id为center，如果其他的仓库声明也适用该id就会覆盖中央仓库的配置。
+        release的enable为true表示开启JBoss仓库的发布版本下载支持，而snapshots的enabled为false，表示关闭JBoss仓库的快照版本的下载支持，maven只会从JBoss仓库下载发布版本的构件
+        对于release和snapshot来说除了enabled还有另外两个自元素 updatePolicy和checksumPolicy
+
 命令(项目根目录)：
     mvn clean compile ： 编译
     mvn clean test : 测试
