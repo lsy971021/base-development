@@ -65,6 +65,8 @@ public class StreamV2 {
 
     /**
      * peek使用：遍历操作，与forEach类似，但不会销毁流元素
+     * peek返回值是Stream，可以继续进行链式调用；
+     * forEach没有返回值。
      */
     @Test
     public void peek() {

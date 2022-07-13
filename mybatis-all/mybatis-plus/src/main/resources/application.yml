@@ -1,7 +1,16 @@
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/devs?autoReconnect=true
+    # 连接url常用参数：
+    # useUnicode：是否使用编码集。
+    # characterEncoding：utf8、gbk等，设置字符集编码类型。
+    # zeroDateTimeBehavior：convertToNull，datetime的字段值全部为0时的处理方式。
+    # useSSL：是否使用SSL协议。（true 可以连接高版本的数据库）
+    # serverTimezone：时区。
+    # autoReconnect：当数据库连接异常中断时，是否自动重新连接
+    # autoReconnectForPools：是否使用针对数据库连接池的重连策略
+    # failOverReadOnly：自动重连成功后，连接是否设置为只读
+    url: jdbc:mysql://localhost:3306/devs??useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&failOverReadOnly=false
     username: root
     password: Liusiyuan1
 mybatis-plus:
