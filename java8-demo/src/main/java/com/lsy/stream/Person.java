@@ -1,4 +1,4 @@
-package com.lsy.annotation;
+package com.lsy.stream;
 
 import lombok.Data;
 

@@ -1,6 +1,5 @@
 package com.lsy.stream;
 
-import com.lsy.annotation.Person;
 import org.junit.Test;
 
 import java.util.*;
