@@ -13,7 +13,15 @@ import java.time.LocalDateTime;
  */
 @Data
 public class User {
+
     private Long id;
+
+    /**
+     * 当数据库字段字符集为 uft8时，一些字符插入会报错，如：𬍛， 需要修改成utf8mb4字符集
+     * utf8能够存下大部分中文汉字，mysql支持的 utf8 编码最大字符长度为 3 字节，如果遇到 4 字节的宽字符就会插入异常了。三个字节的 UTF-8 最大能编码的 Unicode 字符是 0xffff，
+     * 也就是 Unicode 中的基本多文种平面(BMP)。也就是说，任何不在基本多文本平面的 Unicode字符，都无法使用 Mysql 的 utf8 字符集存储，包括 Emoji 表情(Emoji是一种特殊的 Unicode 编码，
+     * 常见于 ios 和 android 手机上)，和很多不常用的汉字，以及任何新增的 Unicode 字符等等(utf8的缺点)。
+     */
     @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String name;
     /**
