@@ -1,0 +1,35 @@
+锁：
+    表锁：ALTER TABLE之类的语句使用的是表锁，忽略存储引擎的锁机制
+        查看数据表被锁状态(展示出来的均为有锁状态) ： show OPEN TABLES where In_use > 0
+
+    死锁：两个或多个事务在同一资源上相互占用，并请求锁定对方占用的资源。
+        如：
+            事务1：
+                start transaction;
+                update xxx set xxx=xx where id=4;
+                update xxx set xxx=xx where id=5;
+                COMMIT;  （锁只有在COMMIT 或 ROLLBACK 的时候才会释放）
+            事务2：
+                start transaction;
+                update xxx set xxx=xx where id=5;
+                update xxx set xxx=xx where id=4
+                COMMIT;
+        innoDB能检测到死锁的循环依赖，并立即返回一个错误，将持有最少行级排他锁的事务进行回滚。（还可设置当查询的时间达到锁等待超时的设定后放弃锁请求）
+    显式锁：
+        SELECT ... LOCK IN SHARE MODE;
+        SELECT ... FOR UPDATE;
+        LOCK TABLES xxx READ [local];   (对xxx表增加一个读锁，所有线程均可读，加锁线程写会返回错误，其他线程没有任何反应，一直等待中，说明没有得到写锁定，一直处于等待中，直到锁被释放。)
+        LOCK TABLES xxx WRITE [local];   (对xxx表增加一个写锁，所有线程均读会被阻塞，直到释放锁)
+        UNLOCK TABLES;  （释放锁,只能有上锁线程才能释放锁）
+
+        
+事务：
+    AUTOCOMMIT: mysql默认采用自动提交(AUTOCOMMIT)模式，如果不是显示的开启一个事务，则每个查询都被当作一个事务执行提交操作
+        设置AUTOCOMMIT变量：
+            SHOW VARIABLES LIKE 'AUTOCOMMIT';
+            SET AUTOCOMMIT = 1; (1/ON:启用，0/OFF:禁用)
+        直到显示的执行COMMIT或者ROLLBACK，该事务结束 （锁只有在COMMIT 或 ROLLBACK 的时候才会释放）
+
+    事务日志：存储引擎修改表数据的时候只需要修改其内存拷贝，再把该修改行为机录到持久的硬盘上的事务日志中，而不用每次修改的数据本身持久到磁盘。
+        事务日志采用的是追加的方式，因此写日志的操作是磁盘上一小块区域内的顺序I/O，而不像随机I/O需要再磁盘得多个地方移动磁头，所以采用事务日志的方式相对来谁要快得多。
+        内存中被修改的数据在后台可以慢慢的刷回到磁盘，若系统崩溃，存储引擎在重启时能够自动恢复这部分修改的数据（预写式日志，修改数据需要写两次磁盘）
