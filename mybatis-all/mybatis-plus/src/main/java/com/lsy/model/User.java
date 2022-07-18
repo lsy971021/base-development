@@ -72,6 +72,7 @@ public class User {
      * exist=false:表示当前属性不是数据库的字段，但在项目中必须使用，这样在对该属性赋值时，mybatis-plus就会忽略这个，不会报错。
      *       否则会报一个如下的异常。
      *       ###Error querying database. Cause:com.mysql.jdbc.exception.jdbc4.MySQLSyntaxErrorException:Unknown column ‘***’ 'in field list’
+     * 若数据库中有的字段在实体类中没有，不会报错
      */
     @TableField(exist = false)
     private String comment;
