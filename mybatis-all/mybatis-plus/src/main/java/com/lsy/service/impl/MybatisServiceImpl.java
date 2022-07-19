@@ -35,16 +35,17 @@ public class MybatisServiceImpl implements MybatisService {
     }
 
     @Override
-    public void findBySomething(String something) {
+    public List<User> findByEmail(String email) {
         LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda();
-        wrapper.likeRight(User::getEmail,something).and(x->x.isNotNull(User::getName));
+        wrapper.like(User::getEmail,email).and(x->x.isNotNull(User::getName));
         wrapper.func(x->{
-            if(true) x.ge(User::getId,3);
+            if(true) x.ge(User::getId,0);
             else x.le(User::getId,3);
         });
         wrapper.last("limit 2");
         List<User> users = userMapper.selectList(wrapper);
         users.forEach(System.out::println);
+        return users;
     }
 
     /**

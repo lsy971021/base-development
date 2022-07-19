@@ -1,6 +1,6 @@
 信息查看：
     表相关信息： SHOW TABLE STATUS LIKE 'xxx'\G;  （InnoDB下，结果中的Rows是个估值）
-
+    查询表被锁进程,查询到相应进程kill id : show processlist
 
 锁：
     表锁：ALTER TABLE之类的语句使用的是表锁，忽略存储引擎的锁机制

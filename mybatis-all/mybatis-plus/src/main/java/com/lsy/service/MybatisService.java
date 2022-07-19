@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.lsy.model.User;
 
+import java.util.List;
+
 public interface MybatisService {
     void test();
 
     void save(User user);
 
-    void findBySomething(String something);
+    List<User> findByEmail(String something);
 
     void updateBySomething(User user);
 

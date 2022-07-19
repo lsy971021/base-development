@@ -3,6 +3,8 @@ package com.lsy.model;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.apache.ibatis.reflection.MetaObject;
 
@@ -12,8 +14,9 @@ import java.time.LocalDateTime;
  * 必须与数据库字段一一对应
  */
 @Data
+@ApiModel(value="user对象",description="用户对象user")
 public class User {
-
+    @ApiModelProperty(hidden = true)
     private Long id;
 
     /**
@@ -23,18 +26,21 @@ public class User {
      * 常见于 ios 和 android 手机上)，和很多不常用的汉字，以及任何新增的 Unicode 字符等等(utf8的缺点)。
      */
     @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @ApiModelProperty(value="用户名",name="name",example="刘亦菲")
     private String name;
     /**
      * 其中 %s 会填充为字段
      * 输出 SQL 为：update 表 set 字段=字段+1 where ... (即 在原字段值基础上+1，手动赋得值无效)
      */
     @TableField(update = "%s+1")
+    @ApiModelProperty(value="年龄",name="age",example="18")
     private Integer age;
     /**
      * mybatisplus 更新时默认对值为null的属性不处理（即若某属性为null，不更新这个字段，可能造成若要更新某个字段为null失败）
      * 需要加此注解和属性才能生效
      */
     @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @ApiModelProperty(value="邮箱",name="email",example="lyf@qq.com")
     private String email;
 
     /**
@@ -53,12 +59,14 @@ public class User {
      * 需要实现元对象处理器接口MetaObjectHandler  {@link com.lsy.config.MpHandler#insertFill(MetaObject)}
      */
     @TableField(fill = FieldFill.INSERT)
+    @ApiModelProperty(hidden = true)
     private LocalDateTime createTime;
 
     /**
      * @see com.lsy.config.MpHandler#updateFill(MetaObject)
      */
     @TableField(fill = FieldFill.UPDATE)
+    @ApiModelProperty(hidden = true)
     private LocalDateTime updateTime;
 
     /**
@@ -66,6 +74,7 @@ public class User {
      * 输出 SQL 为：update 表 set 字段=now() where ...
      */
     @TableField(update = "now()")
+    @ApiModelProperty(hidden = true)
     private LocalDateTime modTime;
 
     /**
@@ -75,5 +84,6 @@ public class User {
      * 若数据库中有的字段在实体类中没有，不会报错
      */
     @TableField(exist = false)
+    @ApiModelProperty(hidden = true)
     private String comment;
 }

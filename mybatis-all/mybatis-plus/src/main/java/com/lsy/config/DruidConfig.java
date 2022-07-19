@@ -34,6 +34,7 @@ public class DruidConfig {
      * poolPreparedStatements		是否缓存preparedStatement，也就是PsCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭
      * maxOpenPreparedStatements		要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置打一下，比如说100
      * validationQuery		用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn 、testWhileIdle都不会起作用
+     * testOnConnect    在连接初始化时执行连接可用性检查
      * testOnBorrow		申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
      * testOnReturn		归还连接时执行它validationQuery检测连接是否有效，做了这个配置会降低性能
      * testWhileIdle		建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunMills，执行validationQuery检测连接是否有效
