@@ -55,8 +55,8 @@ public class MpHandler implements MetaObjectHandler {
             return;
         }
         //判断实体类中字段时候被赋值
-        Object createTime = metaObject.getValue("updateTime");
-        if(createTime!=null){
+        Object updateTime = metaObject.getValue("updateTime");
+        if(updateTime!=null){
             log.info("updateTime以被赋值");
             return;
         }

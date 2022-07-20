@@ -16,7 +16,7 @@ public interface MybatisService {
 
     void updateBySomething(User user);
 
-    void deleteBySomething(String something);
+    void deleteById(Long id);
 
     IPage<User> page();
 

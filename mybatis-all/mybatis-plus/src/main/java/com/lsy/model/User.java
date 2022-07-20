@@ -28,7 +28,7 @@ public class User implements Serializable {
      * 也就是 Unicode 中的基本多文种平面(BMP)。也就是说，任何不在基本多文本平面的 Unicode字符，都无法使用 Mysql 的 utf8 字符集存储，包括 Emoji 表情(Emoji是一种特殊的 Unicode 编码，
      * 常见于 ios 和 android 手机上)，和很多不常用的汉字，以及任何新增的 Unicode 字符等等(utf8的缺点)。
      */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @ApiModelProperty(value="用户名",name="name",example="刘亦菲")
     private String name;
     /**
@@ -42,7 +42,7 @@ public class User implements Serializable {
      * mybatisplus 更新时默认对值为null的属性不处理（即若某属性为null，不更新这个字段，可能造成若要更新某个字段为null失败）
      * 需要加此注解和属性才能生效
      */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @ApiModelProperty(value="邮箱",name="email",example="lyf@qq.com")
     private String email;
 
@@ -55,8 +55,8 @@ public class User implements Serializable {
 
     /**
      * 阿里巴巴的开发手册中建议每个数据库表必须要有create_time 和 update_time字段，我们可以使用自动填充功能维护这两个字段
-     * FieldFill.INSERT: 在新增时生效（自动调用 insertFill(MetaObject metaObject)方法）
-     * FieldFill.INSERT_UPDATE: 在新增或更新时均生效
+     * FieldFill.INSERT: 在新增时生效（自动调用 insertFill(MetaObject metaObject)方法）  ！！！！ insert整个user对象时才会生效
+     * FieldFill.INSERT_UPDATE: 在新增或更新时均生效  ！！！！ updateByEntity/byId 时才会生效
      * FieldFill.UPDATE: 在更新时生效（自动调用 updateFill(MetaObject metaObject)方法）
      *
      * 需要实现元对象处理器接口MetaObjectHandler  {@link com.lsy.config.MpHandler#insertFill(MetaObject)}
@@ -68,7 +68,7 @@ public class User implements Serializable {
     /**
      * @see com.lsy.config.MpHandler#updateFill(MetaObject)
      */
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.UPDATE,update = "now()")
     @ApiModelProperty(hidden = true)
     /**
      * 当此字段为null时不向前段返回
@@ -83,6 +83,9 @@ public class User implements Serializable {
     @TableField(update = "now()")
     @ApiModelProperty(hidden = true)
     private LocalDateTime modTime;
+
+    @ApiModelProperty(hidden = true)
+    private Integer del;
 
     /**
      * exist=false:表示当前属性不是数据库的字段，但在项目中必须使用，这样在对该属性赋值时，mybatis-plus就会忽略这个，不会报错。

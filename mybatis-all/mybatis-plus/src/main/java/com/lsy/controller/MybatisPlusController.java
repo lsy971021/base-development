@@ -72,8 +72,8 @@ public class MybatisPlusController {
     }
 
     @PostMapping("/delete")
-    public void deleteBySomething(@RequestParam String something) {
-        mybatisService.deleteBySomething(something);
+    public void deleteBySomething(@RequestParam Long id) {
+        mybatisService.deleteById(id);
     }
 
     @PostMapping("/page")

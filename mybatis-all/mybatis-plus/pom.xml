@@ -64,11 +64,11 @@
             <version>2.8.0</version>
         </dependency>
 
-        <!-- 多数据源配置 -->
+        <!-- 多数据源配置,3.5.0 可以用 多数据源事务控制 @DSTransactional注解 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>3.1.1</version>
+            <version>3.5.0</version>
         </dependency>
     </dependencies>
 </project>

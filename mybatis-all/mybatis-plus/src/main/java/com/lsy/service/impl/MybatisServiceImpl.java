@@ -1,5 +1,6 @@
 package com.lsy.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -22,8 +23,8 @@ public class MybatisServiceImpl implements MybatisService {
     @Autowired
     private UserMapper userMapper;
 
-    public void test(){
-        System.out.println("====="+userMapper);
+    public void test() {
+        System.out.println("=====" + userMapper);
         List<User> users = userMapper.selectList(null);
         System.out.println(users);
     }
@@ -37,10 +38,10 @@ public class MybatisServiceImpl implements MybatisService {
     @Override
     public List<User> findByEmail(String email) {
         LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda();
-        wrapper.like(User::getEmail,email).and(x->x.isNotNull(User::getName));
-        wrapper.func(x->{
-            if(true) x.ge(User::getId,0);
-            else x.le(User::getId,3);
+        wrapper.like(User::getEmail, email).and(x -> x.isNotNull(User::getName));
+        wrapper.func(x -> {
+            if (true) x.ge(User::getId, 0);
+            else x.le(User::getId, 3);
         });
         wrapper.last("limit 2");
         List<User> users = userMapper.selectList(wrapper);
@@ -51,13 +52,14 @@ public class MybatisServiceImpl implements MybatisService {
     /**
      * mybatisplus 更新时默认对值为null的属性不处理（即若某属性为null，不更新这个字段，可能造成若要更新某个字段为null失败）
      * 需要加此注解和属性来生效： @TableField(updateStrategy = FieldStrategy.IGNORED)
+     *
      * @param user
      */
     @Override
     public void updateBySomething(User user) {
         LambdaUpdateWrapper<User> wrapper = new UpdateWrapper<User>().lambda();
-        wrapper.eq(User::getId,user.getId());
-        wrapper.set(User::getEmail,null);
+        wrapper.eq(User::getId, user.getId());
+        wrapper.set(User::getEmail, null);
         //若user中其他属性未赋值(即null值)，则不会更新这些值,wrapper的会生效
 //        int update = userMapper.update(user, wrapper);
         int update = userMapper.updateById(user);
@@ -65,20 +67,36 @@ public class MybatisServiceImpl implements MybatisService {
         System.out.println(update);
     }
 
+    /**
+     * dynamic只有3.5.0版本以上才可以用 多数据源事务控制 @DSTransactional注解
+     * @param id
+     */
+    @DSTransactional
     @Override
-    public void deleteBySomething(String something) {
-        int delete = userMapper.deleteById(something);
-        System.out.println(delete);
+    public void deleteById(Long id) {
+        // 若为下面的语句，则 updateFill() 中的update不会生效
+//        userMapper.deleteById(id);
+        //需转换成User，然后对其修改才能生效MpHandler中的 updateFill()
+        User u = new User();
+        u.setId(id);
+        u.setDel(1);
+        userMapper.updateById(u);
+        User user = userMapper.selectById(id);
+        //模拟报错，测试多数据源事务
+//        int i = 1 / 0;
+        userMapper.saveUser(user);
+        System.out.println(user);
     }
 
     /**
      * IPage
+     *
      * @return
      */
     @Override
     public IPage<User> page() {
         // isSearchCount : 是否查询总量
-        IPage<User> page = new Page(2,3);
+        IPage<User> page = new Page(2, 3);
         IPage<User> userIPage = userMapper.selectPage(page, null);
         // 获取查询列表
         List<User> users = userIPage.getRecords();
@@ -94,6 +112,7 @@ public class MybatisServiceImpl implements MybatisService {
 
     /**
      * pageHelper
+     *
      * @return
      */
     @Override
@@ -102,7 +121,7 @@ public class MybatisServiceImpl implements MybatisService {
         int pageSize = 10;
         //count: 是否查询count，默认开启
         //orderBy : 排序
-        PageHelper.startPage(pageIndex,pageSize,"id desc");
+        PageHelper.startPage(pageIndex, pageSize, "id desc");
         List<User> users = userMapper.find();
         PageInfo<User> pageInfo = new PageInfo<>(users);
         pageInfo.setList(users);
