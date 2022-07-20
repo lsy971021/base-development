@@ -14,7 +14,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
+/**
+ * 使用druid配置文件时开启
+ */
+//@Configuration
 public class DruidConfig {
 
     /**

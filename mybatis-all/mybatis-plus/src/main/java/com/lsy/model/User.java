@@ -3,11 +3,14 @@ package com.lsy.model;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.apache.ibatis.reflection.MetaObject;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @ApiModel(value="user对象",description="用户对象user")
-public class User {
+public class User implements Serializable {
     @ApiModelProperty(hidden = true)
     private Long id;
 
@@ -67,6 +70,10 @@ public class User {
      */
     @TableField(fill = FieldFill.UPDATE)
     @ApiModelProperty(hidden = true)
+    /**
+     * 当此字段为null时不向前段返回
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime updateTime;
 
     /**
@@ -85,5 +92,9 @@ public class User {
      */
     @TableField(exist = false)
     @ApiModelProperty(hidden = true)
+    /**
+     * 不向前端反回此字段
+     */
+    @JsonIgnore
     private String comment;
 }
