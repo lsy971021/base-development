@@ -2,6 +2,19 @@
 #Spring Boot 2.0 以上默认使用 com.zaxxer.hikari.HikariDataSource 数据源,可以 通过 spring.datasource.type 指定数据源
 spring:
   datasource:
+    #Spring Boot 2.0以上默认连接池hikari
+    hikari:
+      #池中维护的最小空闲连接数（minIdle<0或者minIdle>maxPoolSize,则被重置为maxPoolSize）
+      minimum-idle: 4
+      #池中最大连接数，包括闲置和使用中的连接。（如果maxPoolSize小于1，则会被重置。当minIdle<=0被重置为DEFAULT_POOL_SIZE则为10;如果minIdle>0则重置为minIdle的值）
+      maximum-pool-size: 16
+      #等待来自池的连接的最大毫秒数,如果小于250毫秒，则被重置回30秒
+      connection-timeout: 10000
+      #连接允许在池中闲置的最长时间（如果idleTimeout+1秒>maxLifetime 且 maxLifetime>0，则会被重置为0（代表永远不会退出）；如果idleTimeout!=0且小于10秒，则会被重置为10秒）
+      idle-timeout: 10000
+      connection-init-sql: set names utf8mb4
+      #池中连接最长生命周期(如果不等于0且小于30秒则会被重置回30分钟)
+      max-lifetime: 100000
     dynamic:
       # 设置默认的数据源或数据源组，默认值即为master
       primary: master
