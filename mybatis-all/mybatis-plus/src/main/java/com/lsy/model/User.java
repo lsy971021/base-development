@@ -42,7 +42,7 @@ public class User implements Serializable {
      * mybatisplus 更新时默认对值为null的属性不处理（即若某属性为null，不更新这个字段，可能造成若要更新某个字段为null失败）
      * 需要加此注解和属性才能生效
      */
-//    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @ApiModelProperty(value="邮箱",name="email",example="lyf@qq.com")
     private String email;
 

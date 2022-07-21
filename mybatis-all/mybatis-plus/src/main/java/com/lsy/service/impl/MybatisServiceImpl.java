@@ -52,17 +52,18 @@ public class MybatisServiceImpl implements MybatisService {
     /**
      * mybatisplus 更新时默认对值为null的属性不处理（即若某属性为null，不更新这个字段，可能造成若要更新某个字段为null失败）
      * 需要加此注解和属性来生效： @TableField(updateStrategy = FieldStrategy.IGNORED)
-     *
+     * 修改时需转换成User对象才能生效MpHandler中的 updateFill()，手写sql可使@TableField(updateStrategy = FieldStrategy.IGNORED) 失效
      * @param user
      */
     @Override
-    public void updateBySomething(User user) {
+    public void updateAge(User user) {
         LambdaUpdateWrapper<User> wrapper = new UpdateWrapper<User>().lambda();
         wrapper.eq(User::getId, user.getId());
-        wrapper.set(User::getEmail, null);
-        //若user中其他属性未赋值(即null值)，则不会更新这些值,wrapper的会生效
+        wrapper.set(User::getAge, user.getAge());
+        //若user中其他属性未赋值(即null值)，则不会更新这些值(要生效需在字段上加@TableField(updateStrategy = FieldStrategy.IGNORED)),wrapper的会生效
 //        int update = userMapper.update(user, wrapper);
-        int update = userMapper.updateById(user);
+//        int update = userMapper.updateById(user);
+        int update = userMapper.updateEmailById(user);
 //        int update = userMapper.update(user, null);
         System.out.println(update);
     }

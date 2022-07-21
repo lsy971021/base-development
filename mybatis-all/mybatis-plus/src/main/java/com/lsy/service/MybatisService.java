@@ -14,7 +14,7 @@ public interface MybatisService {
 
     List<User> findByEmail(String something);
 
-    void updateBySomething(User user);
+    void updateAge(User user);
 
     void deleteById(Long id);
 

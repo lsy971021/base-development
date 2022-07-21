@@ -66,9 +66,9 @@ public class MybatisPlusController {
         return mybatisService.findByEmail(email);
     }
 
-    @PostMapping("/update")
+    @PostMapping("/updateAge")
     public void updateBySomething(@RequestBody User user) {
-        mybatisService.updateBySomething(user);
+        mybatisService.updateAge(user);
     }
 
     @PostMapping("/delete")

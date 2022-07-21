@@ -28,7 +28,7 @@ public class MpTest {
 //        user.setEmail(null);
         user.setName("null");
         user.setAge(1);
-        mybatisService.updateBySomething(user);
+        mybatisService.updateAge(user);
     }
 
     @Autowired

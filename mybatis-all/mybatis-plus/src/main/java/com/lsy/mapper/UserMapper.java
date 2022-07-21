@@ -22,4 +22,7 @@ public interface UserMapper extends BaseMapper<User>{
     @DS("prod")
     @Insert("insert into new_user values(null,#{name},#{age},#{email},#{createTime},#{updateTime},#{modTime},0)")
     int saveUser(User user);
+
+    @Update("update user set age=#{age},update_time=#{updateTime} where id=#{id}")
+    int updateEmailById(User user);
 }
