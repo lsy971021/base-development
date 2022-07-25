@@ -13,10 +13,15 @@ import com.lsy.model.User;
 import com.lsy.mapper.UserMapper;
 import com.lsy.service.MybatisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 对同一个接口，可能会有几种不同的实现类，而默认只会采取其中一种。这种情况下 用 @Primary
+ */
+@Primary
 @Service
 public class MybatisServiceImpl implements MybatisService {
 
