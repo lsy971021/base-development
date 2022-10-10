@@ -73,3 +73,20 @@ POM（项目对象模型） ： project object model     （生成的jar文件�
     mvn dependency:analyze : （编译主代码和测试代码需要用到的依赖： import声明。一些测试和运行时需要的依赖他就发现不了了，如spring-core和spring-beans是运行Spring Framework必要的类库）
         Used undeclared dependencies found:使用到的，但没有显示声明的依赖(依赖中的依赖)，可能存在潜在的风险，当升级直接依赖时，相关传递性的依赖版本也可能发生变化
         Unused declared dependencies found:声明但未使用的
+
+自定义本地仓库目录地址可编辑文件~/.m2/settings.xml，设置localRepository:
+    <settings>
+        <localRepository>/Users/lsy/.m2/repository</localRepository>
+    </settings>
+
+releases和snapshot
+    <snapshots>
+        <enabled>true</enabled>                 //是否开启快照版本的下载支持
+        <updatePolicy>daily</updatePolicy>      //配置Maven从远程仓库检查更新的频率，默认值是daily每天检查一次（never、always-每次构建都检查更新、interval: -X -每隔X分钟检查一次更新）
+        <checksumPolicy>ignore<checksumPolicy>  //配置Maven检查检验和稳健的策略。
+    <snapshots>
+
+    如将模块的版本设定为2.1-SNAPSHOT，然后发布到私服中，在发布过程中，Maven会自动为构建打上时间戳。比如2.1-20091214.221414-13就表示2009年12月14日22点14分14秒的第13次快照。有了该时间戳
+    Maven就能随时找到仓库中该构件2.1-SNAPSHOT的最新构件，默认每天检查一次更新，也可使用 mvn clean install-U 强制让mavne检查更新，当项目经过完善的测试后需要发布的时候，就应该将快照版本更改为发布版本。例如将2.1-SNAPSHOT更改为2.1
+    当依赖的范围是system时，maven直接从本地文件系统解析构建
+    如果依赖版本是RELEASE或者LATEST，则基于更新策略读取所有的远程仓库的原数据groupId/artifactId/maven-metadata.xml,将其与本地仓库的对应原数据合并后，计算出RELEASE或者LATEST真实的值，然后基于这个真实的值检查本地和远程仓库
