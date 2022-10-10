@@ -1,4 +1,22 @@
-#mybatisplus 多数据源dynamic
+#mybatisplus 多数据源dynamic,提供并简化对Druid等的快速集成（内置druid）
+    #当自定义数据源时：
+        #pom中若添加了druid-spring-boot-starter依赖，则需要在启动类排除，没加则需要排除pring Boot 2.0以上默认连接池hikari @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)，排除后下面的hikari才会生效
+        #(因为我们使用的是阿里数据库连接池 Druid，需要排除原生 Druid 的快速配置类，否则会导致配置类在原始的配置文件中寻找数据库的配置属性，从而导致项目无法启动。@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class))
+    #支持 数据源分组 ，适用于多种场景 纯粹多库 读写分离 一主多从 混合模式。
+    #支持无数据源启动，支持配置懒启动数据源(3.3.2+)。
+    #支持数据库敏感配置信息 加密 ENC()。
+    #支持每个数据库独立初始化表结构schema和数据库database。
+    #支持 自定义注解 ，需继承DS(3.2.0+)。
+    #提供对Druid，Mybatis-Plus，P6sy，Jndi的快速集成。
+    #简化Druid和HikariCp配置，提供 全局参数配置 。配置一次，全局通用。
+    #提供 自定义数据源来源 方案。
+    #提供项目启动后 动态增加移除数据源 方案。
+    #提供Mybatis环境下的 纯读写分离 方案。
+    #提供使用 spel动态参数 解析数据源方案。内置spel，session，header，支持自定义。
+    #支持 多层数据源嵌套切换 。（ServiceA >>> ServiceB >>> ServiceC）。
+    #提供对shiro，sharding-jdbc,quartz等第三方库集成的方案,注意事项和示例。
+    #提供 基于seata的分布式事务方案。 附：不支持原生spring事务。
+    #提供 本地多数据源事务方案。 附：不支持原生spring事务(3.3.1+)。
 #Spring Boot 2.0 以上默认使用 com.zaxxer.hikari.HikariDataSource 数据源,可以 通过 spring.datasource.type 指定数据源
 spring:
   datasource:
