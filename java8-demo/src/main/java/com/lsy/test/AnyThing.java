@@ -10,6 +10,8 @@ import com.tencentcloudapi.common.profile.HttpProfile;
 import io.netty.handler.codec.http.HttpUtil;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.junit.Test;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -223,8 +225,15 @@ public class AnyThing implements Cloneable {
     @Test
     public void test11() {
         String s = "[sssss]";
-        System.out.println(s.substring(1, s.length() - 1));
+        System.out.println(test(s));
+//        System.out.println(test(null));
     }
+    // @NonNull 警告，就算为null也不报错
+    public String test(@NonNull String b){
+        return b+"，你好";
+    }
+
+
 
     @Test
     public void test12() throws Exception {
