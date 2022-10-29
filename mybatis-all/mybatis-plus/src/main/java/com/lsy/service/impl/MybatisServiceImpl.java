@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -28,11 +30,21 @@ public class MybatisServiceImpl implements MybatisService {
     @Autowired
     private UserMapper userMapper;
 
-    public void test() {
-        System.out.println("=====" + userMapper);
-        List<User> users = userMapper.selectList(null);
-        System.out.println(users);
+    public String test(){
+        BufferedInputStream inputStream = (BufferedInputStream)this.getClass().getClassLoader().getResourceAsStream("test.txt");
+        try {
+            int read = inputStream.read();
+            System.out.println((char) read);
+            int read1 = inputStream.read();
+            System.out.println((char) read1);
+        } catch (IOException e) {
+        }
+//        long l = file.lastModified();
+//        System.out.println("lastModified=" + l);
+//        System.out.println(path);
+        return "aaa";
     }
+
 
     @Override
     public void save(User user) {
@@ -58,6 +70,7 @@ public class MybatisServiceImpl implements MybatisService {
      * mybatisplus 更新时默认对值为null的属性不处理（即若某属性为null，不更新这个字段，可能造成若要更新某个字段为null失败）
      * 需要加此注解和属性来生效： @TableField(updateStrategy = FieldStrategy.IGNORED)
      * 修改时需转换成User对象才能生效MpHandler中的 updateFill()，手写sql可使@TableField(updateStrategy = FieldStrategy.IGNORED) 失效
+     *
      * @param user
      */
     @Override
@@ -75,6 +88,7 @@ public class MybatisServiceImpl implements MybatisService {
 
     /**
      * dynamic只有3.5.0版本以上才可以用 多数据源事务控制 @DSTransactional注解
+     *
      * @param id
      */
     @DSTransactional

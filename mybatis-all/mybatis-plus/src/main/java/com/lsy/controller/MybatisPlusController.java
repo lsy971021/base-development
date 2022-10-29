@@ -26,8 +26,8 @@ public class MybatisPlusController {
      * 可以不被swagger显示在页面上(默认都会显示)
      */
     @ApiIgnore
-    public void test() {
-        mybatisService.test();
+    public String test() {
+        return mybatisService.test();
     }
 
     @PostMapping("/save")

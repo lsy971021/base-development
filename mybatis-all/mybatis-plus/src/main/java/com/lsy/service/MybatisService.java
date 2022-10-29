@@ -8,7 +8,7 @@ import com.lsy.model.User;
 import java.util.List;
 
 public interface MybatisService {
-    void test();
+    String test();
 
     void save(User user);
 
