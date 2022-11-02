@@ -5,10 +5,15 @@ import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.lsy.params.req.SaveParams;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,6 +23,9 @@ import java.time.LocalDateTime;
  */
 @Data
 @ApiModel(value="user对象",description="用户对象user")
+@Component
+@PropertySource("classpath:application.properties")
+@ConfigurationProperties(prefix = "user")
 public class User implements Serializable {
     @ApiModelProperty(hidden = true)
     private Long id;
@@ -100,4 +108,8 @@ public class User implements Serializable {
      */
     @JsonIgnore
     private String comment;
+
+    @TableField(exist = false)
+    @Value("${user.saveParams}")
+    private SaveParams saveParams;
 }

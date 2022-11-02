@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -29,20 +27,11 @@ public class MybatisServiceImpl implements MybatisService {
 
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private User user;
     public String test(){
-        BufferedInputStream inputStream = (BufferedInputStream)this.getClass().getClassLoader().getResourceAsStream("test.txt");
-        try {
-            int read = inputStream.read();
-            System.out.println((char) read);
-            int read1 = inputStream.read();
-            System.out.println((char) read1);
-        } catch (IOException e) {
-        }
-//        long l = file.lastModified();
-//        System.out.println("lastModified=" + l);
-//        System.out.println(path);
-        return "aaa";
+        System.out.println(user.toString());
+        return user.toString();
     }
 
 

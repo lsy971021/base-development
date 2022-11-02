@@ -1,5 +1,9 @@
 package com.lsy.params.req;
 
-public class SaveParams {
+import lombok.Data;
 
+@Data
+public class SaveParams {
+    String id;
+    String province;
 }

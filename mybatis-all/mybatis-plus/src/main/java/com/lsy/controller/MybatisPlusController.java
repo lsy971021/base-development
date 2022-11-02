@@ -1,7 +1,6 @@
 package com.lsy.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.lsy.model.User;
 import com.lsy.service.MybatisService;
