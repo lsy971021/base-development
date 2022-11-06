@@ -19,6 +19,7 @@
         <module>springCloud-demo</module>
         <module>webMagic</module>
         <module>mybatis-all</module>
+        <module>xxl-job</module>
     </modules>
 
     <properties>
