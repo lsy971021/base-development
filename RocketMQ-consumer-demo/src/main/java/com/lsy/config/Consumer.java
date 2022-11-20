@@ -4,6 +4,7 @@ import com.lsy.listener.ConsumerListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -37,6 +38,8 @@ public class Consumer {
     public void consume() throws Exception {
         consumer = new DefaultMQPushConsumer(GROUP);
         consumer.setNamesrvAddr(ADDR);
+        // 默认为集群消费 （每个消息只会被一个实例消费）
+        consumer.setMessageModel(MessageModel.CLUSTERING);
         consumer.subscribe(TOPIC,"*");
         /**
          * 注册监听器
