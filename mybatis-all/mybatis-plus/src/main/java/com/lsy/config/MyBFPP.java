@@ -1,6 +1,5 @@
 package com.lsy.config;
 
-import com.lsy.model.User;
 import com.lsy.params.req.SaveParams;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

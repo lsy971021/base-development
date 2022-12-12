@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lsy.config.MyFactoryBean;
 import com.lsy.model.User;
 import com.lsy.mapper.UserMapper;
 import com.lsy.params.req.SaveParams;
@@ -26,7 +27,14 @@ import java.util.List;
 @Primary
 @Service
 public class MybatisServiceImpl implements MybatisService {
-
+    @Autowired
+    // @Qualifier 可加可不加，里面的值 & 可加可不加 （& + beanName）
+    @Qualifier("&myFactoryBean")
+    private MyFactoryBean myFactoryBean;
+    @Autowired
+    // 要加，通过factoryBean获取对象
+    @Qualifier("myFactoryBean")
+    private SaveParams saveParams1;
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -37,6 +45,8 @@ public class MybatisServiceImpl implements MybatisService {
     public String test(){
         System.out.println(user.toString());
         System.out.println(saveParams.toString());
+        System.out.println("通过factoryBean创建的实例：SaveParams"+saveParams1.toString());
+        System.out.println("通过factoryBean创建的实例：MyFactoryBean"+myFactoryBean);
         return user.toString();
     }
 
