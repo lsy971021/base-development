@@ -14,6 +14,7 @@ import com.lsy.model.User;
 import com.lsy.mapper.UserMapper;
 import com.lsy.params.req.SaveParams;
 import com.lsy.service.MybatisService;
+import com.lsy.service.abs.AbstractMybatisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -26,22 +27,8 @@ import java.util.List;
  */
 @Primary
 @Service
-public class MybatisServiceImpl implements MybatisService {
-    @Autowired
-    // @Qualifier 可加可不加，里面的值 & 可加可不加 （& + beanName）
-    @Qualifier("&myFactoryBean")
-    private MyFactoryBean myFactoryBean;
-    @Autowired
-    // 要加，通过factoryBean获取对象
-    @Qualifier("myFactoryBean")
-    private SaveParams saveParams1;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private User user;
-    @Autowired
-    @Qualifier("test")
-    private SaveParams saveParams;
+public class MybatisServiceImpl extends AbstractMybatisService {
+
     public String test(){
         System.out.println(user.toString());
         System.out.println(saveParams.toString());
