@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * 如果不排除其会在原生的spring.datasource下找url, username, password等。而我们动态数据源的配置路径是变化的，所以需要排除
  * 如果想在项目中使用多数据源就需要排除它，手动指定多数据源
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan("com.lsy.mapper")
 public class MybatisPlusApplication {
     public static void main(String[] args) {

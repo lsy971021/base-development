@@ -1,4 +1,4 @@
-#mybatisplus 多数据源dynamic,提供并简化对Druid等的快速集成（内置druid）
+#mybatisplus 多数据源dynamic,提供并简化对Druid等的快速集成（内置druid，但pom也需要配置druid，默认使用druid连接池，也可配置使用其它如Hikari,但需要在pom中注调druid相关依赖）
     #当自定义数据源时：
         #pom中若添加了druid-spring-boot-starter依赖，则需要在启动类排除，没加则需要排除pring Boot 2.0以上默认连接池hikari @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)，排除后下面的hikari才会生效
         #(因为我们使用的是阿里数据库连接池 Druid，需要排除原生 Druid 的快速配置类，否则会导致配置类在原始的配置文件中寻找数据库的配置属性，从而导致项目无法启动。@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class))
