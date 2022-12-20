@@ -1,12 +1,17 @@
 package com.lsy.utils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.joda.time.DateTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("all")
 public class DateUtils {
@@ -15,6 +20,8 @@ public class DateUtils {
      * yyyy-MM-dd
      */
     public static final FastDateFormat DATE_FORMAT_1 = FastDateFormat.getInstance("yyyy-MM-dd");
+    public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final Pattern datePattern = Pattern.compile("(\\d{4})([-年.])(\\d{1,2})([-月.])(\\d{1,2})");
     private static final FastDateFormat DATE_FORMAT_2 = FastDateFormat.getInstance("yyyy年MM月dd日");
     private static final FastDateFormat DATE_FORMAT_3 = FastDateFormat.getInstance("yyyy年MM月");
     private static final FastDateFormat DATE_FORMAT_4 = FastDateFormat.getInstance("yyyy年");
@@ -514,6 +521,64 @@ public class DateUtils {
         long nowLong = System.currentTimeMillis();
         long todayLong = nowLong - ((nowLong - BEIJING_DIFF_LONG) % DAY_LONG);
         return new Date(todayLong - day * DAY_LONG);
+    }
+
+
+    /**
+     * 将任意包含时间日期字符串转换为 LocalDateTime
+     *
+     * @param timeStr 字符串符合正则 ： (\d{4})([-年.])(\d{1,2})([-月.])(\d{1,2})
+     * @return LocalDateTime
+     */
+    public static LocalDateTime toLocalDateTime(String timeStr) {
+        if (StringUtils.isBlank(timeStr)) {
+            return null;
+        }
+        Matcher matcher = datePattern.matcher(timeStr);
+        String reverseTime = timeStr;
+        while (matcher.find()) {
+            reverseTime = matcher.group(0);
+        }
+        if (reverseTime == null) {
+            return null;
+        }
+        reverseTime = reverseTime.replaceAll("([-年月.])", "-");
+        // 标准 yyyy-MM-dd 格式
+        if (reverseTime.length() < 10) {
+            String[] split = reverseTime.split("-");
+            StringBuilder stringBuilder = new StringBuilder(split[0]);
+            for (int i = 1; i < split.length; i++) {
+                stringBuilder.append("-");
+                if (split[i].length() < 2) {
+                    stringBuilder.append(0).append(split[i]);
+                    continue;
+                }
+                stringBuilder.append(split[i]);
+            }
+            reverseTime = stringBuilder.toString();
+        }
+        LocalDateTime localDateTime = null;
+        try {
+            localDateTime = LocalDate.parse(reverseTime, dateFormatter).atStartOfDay();
+        } catch (Throwable ignore) {
+        }
+        return localDateTime;
+    }
+
+    /**
+     * 将任意包含时间日期字符串转换为 Date
+     *
+     * @param timeStr 字符串符合正则 ： (\d{4})([-年.])(\d{1,2})([-月.])(\d{1,2})
+     * @return Date
+     */
+    public static Date toDate(String timeStr) {
+        LocalDateTime localDateTime = toLocalDateTime(timeStr);
+        if (localDateTime == null)
+            return null;
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+        Instant instant = zonedDateTime.toInstant();
+        return Date.from(instant);
     }
 
 }
